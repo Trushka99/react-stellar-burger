@@ -1,0 +1,28 @@
+
+.tabs_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: max-content;
+}
+.container {
+  overflow-y: scroll;
+  max-height: 640px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 272px);
+  row-gap: 32px;
+  column-gap: 24px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #40404b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+

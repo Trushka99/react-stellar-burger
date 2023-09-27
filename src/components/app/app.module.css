@@ -6,6 +6,7 @@
   color: #f2f2f3;
 }
 .main {
-  width: 80%;
+  max-width: 80%;
   margin: 0 auto;
+
 }
