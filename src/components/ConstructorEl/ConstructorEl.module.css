@@ -1,0 +1,9 @@
+.element {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+.burger_unlocked {
+  width: 536px;
+  background: rgba(28, 28, 33, 1);
+}
