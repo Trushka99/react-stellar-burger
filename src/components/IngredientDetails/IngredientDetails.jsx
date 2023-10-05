@@ -1,4 +1,5 @@
 import IngridientStyle from "./IngredientDetails.module.css";
+import PropTypes from "prop-types";
 
 export const IngredientDetails = (props) => {
   return (
@@ -9,7 +10,7 @@ export const IngredientDetails = (props) => {
         <p className="text text_type_main-medium">{props.name}</p>
       </div>
       <ul className={IngridientStyle.flex_row}>
-        <li>
+        <li className={IngridientStyle.nutrit}>
           <p className="text text_type_main-default text_color_inactive">
             Калории,ккал
           </p>
@@ -17,7 +18,7 @@ export const IngredientDetails = (props) => {
             {props.calories}
           </p>
         </li>
-        <li>
+        <li className={IngridientStyle.nutrit}>
           <p className="text text_type_main-default text_color_inactive">
             Белки, г
           </p>
@@ -25,7 +26,7 @@ export const IngredientDetails = (props) => {
             {props.proteins}
           </p>
         </li>
-        <li>
+        <li className={IngridientStyle.nutrit}>
           <p className="text text_type_main-default text_color_inactive">
             Жиры, г
           </p>
@@ -33,9 +34,9 @@ export const IngredientDetails = (props) => {
             {props.fat}
           </p>
         </li>
-        <li>
+        <li className={IngridientStyle.nutrit}>
           <p className="text text_type_main-default text_color_inactive">
-            Углеводы, г {props.carbohydrates}
+            Углеводы, г 
           </p>
           <p className="text text_type_main-default text_color_inactive">
             {props.carbohydrates}
@@ -44,4 +45,16 @@ export const IngredientDetails = (props) => {
       </ul>
     </div>
   );
+};
+IngredientDetails.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      image: PropTypes.string,
+      name: PropTypes.string,
+      proteins: PropTypes.number,
+      fat: PropTypes.number,
+      carbohydrates: PropTypes.number,
+      calories: PropTypes.number,
+    })
+  ),
 };

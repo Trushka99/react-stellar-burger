@@ -4,16 +4,29 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientStyle from "./Ingridient.module.css";
 import PropTypes from "prop-types";
-import Modal from '../Modal/Modal'
-import { useState } from 'react'
+import Modal from "../Modal/Modal";
+import { useState } from "react";
+import { useEffect } from "react";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 
 export const Ingredient = (props) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  function handleEscClose(evt) {
+    if (evt.key === "Escape") {
+      setIsOpen(false);
+    }
+  }
+  useEffect(() => {
+    document.addEventListener("keydown", handleEscClose);
+  });
   if (props.type === props.ex) {
     return (
       <div className={IngridientStyle.item}>
-        <img onClick={() => setIsOpen(true)} src={props.image} className="ml-4 mr-4"></img>
+        <img
+          onClick={() => setIsOpen(true)}
+          src={props.image}
+          className="ml-4 mr-4"
+        ></img>
         <div className={IngridientStyle.price_container}>
           <p className="text text_type_digits-default mt-1 mb-1 pr-2">
             {props.price}
@@ -23,7 +36,7 @@ export const Ingredient = (props) => {
         <p className="text text_type_main-default">{props.name}</p>
         <Counter count={1} size="default" extraClass="m-1" />
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-          <IngredientDetails {...props}/>
+          <IngredientDetails {...props} />
         </Modal>
       </div>
     );
@@ -31,6 +44,7 @@ export const Ingredient = (props) => {
     return null;
   }
 };
+
 
 Ingredient.propTypes = {
   type: PropTypes.string,

@@ -1,6 +1,6 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { useEffect } from "react";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
 import {
   ConstructorElement,
@@ -13,6 +13,16 @@ import Modal from "../Modal/Modal";
 
 export function BurgerConstructor(props) {
   const [isOpen, setIsOpen] = useState(false);
+  function handleEscClose(evt) {
+    if (evt.key === "Escape") {
+      setIsOpen(false);
+    }
+  }
+  useEffect(() => {
+    document.addEventListener("keydown", handleEscClose);
+  });
+
+
   return (
     <div>
       <div className={BurgerConstructorStyles.construction_container}>
@@ -38,24 +48,9 @@ export function BurgerConstructor(props) {
           extraClass={BurgerConstructorStyles.burger_locked}
         />
       </div>
-      <div
-        className="mt-5"
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          gap: "40px",
-          justifyContent: "flex-end",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: "8px",
-            alignItems: "center",
-          }}
-        >
-          <p className="text text_type_digits-default mt-1 mb-1 pr-2">610</p>
+      <div className={`${BurgerConstructorStyles.price_container} mt-5`}>
+        <div className={BurgerConstructorStyles.price}>
+          <p className="text text_type_digits-default mr-2">{props.total}</p>
           <CurrencyIcon />
         </div>
         <Button
@@ -74,5 +69,18 @@ export function BurgerConstructor(props) {
   );
 }
 BurgerConstructor.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+      ex: PropTypes.string,
+      _id: PropTypes.string,
+      image: PropTypes.string,
+      price: PropTypes.number,
+      name: PropTypes.string,
+      proteins: PropTypes.number,
+      fat: PropTypes.number,
+      carbohydrates: PropTypes.number,
+      calories: PropTypes.number,
+    })
+  ),
 };
