@@ -6,19 +6,11 @@ import IngridientStyle from "./Ingridient.module.css";
 import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 import { useState } from "react";
-import { useEffect } from "react";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 
 export const Ingredient = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  function handleEscClose(evt) {
-    if (evt.key === "Escape") {
-      setIsOpen(false);
-    }
-  }
-  useEffect(() => {
-    document.addEventListener("keydown", handleEscClose);
-  });
+
   if (props.type === props.ex) {
     return (
       <div className={IngridientStyle.item}>
@@ -43,6 +35,7 @@ export const Ingredient = (props) => {
   } else {
     return null;
   }
+  
 };
 
 

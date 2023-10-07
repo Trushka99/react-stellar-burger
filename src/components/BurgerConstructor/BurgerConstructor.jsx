@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useEffect } from "react";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
 import {
   ConstructorElement,
@@ -10,18 +9,9 @@ import {
 import BurgerConstructorStyles from "./BurgerConstructor.module.css";
 import { ConstructorEl } from "../ConstructorEl/ContructorEl";
 import Modal from "../Modal/Modal";
-
+import { ApiConnect } from "../ApiConnect/ApiConnect";
 export function BurgerConstructor(props) {
   const [isOpen, setIsOpen] = useState(false);
-  function handleEscClose(evt) {
-    if (evt.key === "Escape") {
-      setIsOpen(false);
-    }
-  }
-  useEffect(() => {
-    document.addEventListener("keydown", handleEscClose);
-  });
-
 
   return (
     <div>
@@ -69,18 +59,5 @@ export function BurgerConstructor(props) {
   );
 }
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string,
-      ex: PropTypes.string,
-      _id: PropTypes.string,
-      image: PropTypes.string,
-      price: PropTypes.number,
-      name: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-    })
-  ),
+  data: PropTypes.arrayOf(ApiConnect).isRequired
 };

@@ -3,7 +3,7 @@ import styles from "./app.module.css";
 import { Header } from "../header/header";
 import { BurgerIngredients } from "../BurgerIngridients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
-import { Api } from "../Api/api";
+import { GetIngridients } from "../Api/api";
 function App() {
   const [state, setState] = React.useState({
     data: [],
@@ -11,7 +11,7 @@ function App() {
   });
   React.useEffect(() => {
     const getProductData = async () => {
-      const data = await Api();
+      const data = await GetIngridients();
       data.data.forEach((element) => {
         let total = state.total + element.price;
         setState({ ...state, data: data.data, total: total + element.price });

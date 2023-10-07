@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsStyle from "./BurgerIngredients.module.css";
 import { Ingredient } from "../Ingridient/Ingridient";
+import { ApiConnect } from "../ApiConnect/ApiConnect";
 
 export function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState("Соусы");
@@ -49,18 +50,5 @@ export function BurgerIngredients(props) {
   );
 }
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string,
-      ex: PropTypes.string,
-      _id: PropTypes.string,
-      image: PropTypes.string,
-      price: PropTypes.number,
-      name: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-    })
-  ),
+  data: PropTypes.arrayOf(ApiConnect).isRequired,
 };

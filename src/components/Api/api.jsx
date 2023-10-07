@@ -5,7 +5,7 @@ function checkResponse(res) {
     return res.json();
   }
 
-export function Api() {
+export function GetIngridients() {
 
   return fetch("https://norma.nomoreparties.space/api/ingredients", {
     method: "GET",
