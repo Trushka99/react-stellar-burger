@@ -6,7 +6,7 @@
 }
 .container {
   overflow-y: scroll;
-  max-height: 640px;
+  max-height: 670px;
 }
 .grid {
   display: grid;

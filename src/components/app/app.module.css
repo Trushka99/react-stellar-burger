@@ -8,5 +8,9 @@
 .main {
   max-width: 80%;
   margin: 0 auto;
-
+}
+.burgers {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
 }

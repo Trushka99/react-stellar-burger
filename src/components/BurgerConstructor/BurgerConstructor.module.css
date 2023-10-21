@@ -9,10 +9,20 @@
   display: grid;
   grid-template-rows: repeat(auto, 1fr);
   overflow-y: scroll;
-  max-height: 400px;
+  max-height: 430px;
   row-gap: 16px;
 }
-
+.price_container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: flex-end;
+}
+.price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .burger_locked {
   max-width: 536px;
   background: rgba(28, 28, 33, 1);

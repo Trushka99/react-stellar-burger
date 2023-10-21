@@ -1,20 +1,36 @@
+import React from "react";
 import styles from "./app.module.css";
-import { data } from "../../utils/data";
 import { Header } from "../header/header";
 import { BurgerIngredients } from "../BurgerIngridients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
+import { GetIngridients } from "../Api/api";
 function App() {
+  const [state, setState] = React.useState({
+    data: [],
+    total: 400,
+  });
+  React.useEffect(() => {
+    const getProductData = async () => {
+      const data = await GetIngridients();
+      data.data.forEach((element) => {
+        let total = state.total + element.price;
+        setState({ ...state, data: data.data, total: total + element.price });
+      });
+    };
+
+    getProductData();
+  }, []);
   return (
     <div className={styles.app}>
       <header>
-        <Header/>
+        <Header />
       </header>
       <main className={styles.main}>
-      <h2 className='main_text'>Соберите бургер</h2>
-        <div style={{ display: "flex", flexDirection: "row", gap:'40px'}}>
-      <BurgerIngredients data={data} />
-      <BurgerConstructor data={data}/>
-      </div>
+        <h2 className="main_text">Соберите бургер</h2>
+        <div className={styles.burgers}>
+          <BurgerIngredients data={state.data} />
+          <BurgerConstructor total={state.total} data={state.data} />
+        </div>
       </main>
     </div>
   );
