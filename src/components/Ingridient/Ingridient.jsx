@@ -1,3 +1,4 @@
+import React from "react";
 import {
   CurrencyIcon,
   Counter,
@@ -7,13 +8,29 @@ import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 import { useState } from "react";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
-
+import { MooveContext } from "../app/app";
+import { BunContext } from "../app/app";
+import { BunStatus } from "../app/app";
+let id;
 export const Ingredient = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { moved, setMove } = React.useContext(MooveContext);
+  const { bun, setBun } = React.useContext(BunContext);
+  const {bunStatus, setStatus} = React.useContext(BunStatus)
+  id = props._id;
+  const move = () => {
+    if (props.type === "bun") {
+      setBun(props);
+      setStatus(true)
+    } else {
+      setMove([...moved, props]);
+      
+    }
+  };
 
   if (props.type === props.ex) {
     return (
-      <div className={IngridientStyle.item}>
+      <div onClick={() => move()} className={IngridientStyle.item}>
         <img
           onClick={() => setIsOpen(true)}
           src={props.image}
@@ -32,12 +49,9 @@ export const Ingredient = (props) => {
         </Modal>
       </div>
     );
-  } else {
-    return null;
   }
-  
+  return null;
 };
-
 
 Ingredient.propTypes = {
   type: PropTypes.string,

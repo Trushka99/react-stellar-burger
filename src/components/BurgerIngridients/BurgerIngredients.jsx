@@ -4,12 +4,14 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsStyle from "./BurgerIngredients.module.css";
 import { Ingredient } from "../Ingridient/Ingridient";
 import { ApiConnect } from "../ApiConnect/ApiConnect";
-
-export function BurgerIngredients(props) {
+import { DataContext } from "../app/app";
+export function BurgerIngredients() {
   const [current, setCurrent] = React.useState("Соусы");
+  const { data } = React.useContext(DataContext);
   function chooseTab(tab) {
     setCurrent(tab);
   }
+  
   return (
     <div>
       <div className={IngridientsStyle.tabs_container}>
@@ -29,19 +31,19 @@ export function BurgerIngredients(props) {
       <div className={IngridientsStyle.container}>
         <h1>Булки</h1>
         <div className={IngridientsStyle.grid}>
-          {props.data.map((ingridient) => (
+          {data.map((ingridient) => (
             <Ingredient key={ingridient._id} {...ingridient} ex="bun" />
           ))}
         </div>
         <h1>Соусы</h1>
         <div className={IngridientsStyle.grid}>
-          {props.data.map((ingridient) => (
+          {data.map((ingridient) => (
             <Ingredient key={ingridient._id} {...ingridient} ex="sauce" />
           ))}
         </div>
         <h1>Начинки</h1>
         <div className={IngridientsStyle.grid}>
-          {props.data.map((ingridient) => (
+          {data.map((ingridient) => (
             <Ingredient key={ingridient._id} {...ingridient} ex="main" />
           ))}
         </div>
