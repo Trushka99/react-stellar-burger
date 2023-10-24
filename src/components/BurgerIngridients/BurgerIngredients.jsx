@@ -4,7 +4,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsStyle from "./BurgerIngredients.module.css";
 import { Ingredient } from "../Ingridient/Ingridient";
 import { ApiConnect } from "../ApiConnect/ApiConnect";
-import { DataContext } from "../app/app";
+import { DataContext } from "../../services/Stellar-burger-contex";
 export function BurgerIngredients() {
   const [current, setCurrent] = React.useState("Соусы");
   const { data } = React.useContext(DataContext);
