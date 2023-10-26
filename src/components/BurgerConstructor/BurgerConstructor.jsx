@@ -15,7 +15,7 @@ import { MoveContext } from "../../services/Stellar-burger-contex";
 import { PriceContext } from "../../services/Stellar-burger-contex";
 import { BunStatus } from "../../services/Stellar-burger-contex";
 import { SeparateIngContext } from "../../services/Stellar-burger-contex";
-
+import { PostOrder } from "../Api/api";
 export function BurgerConstructor(props) {
   const [isOpen, setIsOpen] = useState(false);
   const { moved } = React.useContext(MoveContext);
@@ -27,19 +27,7 @@ export function BurgerConstructor(props) {
   const result = moved.map((item) => item._id);
 
   const handleClick = () => {
-    fetch("https://norma.nomoreparties.space/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-        ingredients: result,
-      }),
-    })
-      .then((res) => {
-        return res.json();
-      })
+    PostOrder(result)
       .then((data) => {
         let order = data.order.number;
         setId(order);

@@ -7,11 +7,11 @@ import { ApiConnect } from "../ApiConnect/ApiConnect";
 import { DataContext } from "../../services/Stellar-burger-contex";
 export function BurgerIngredients() {
   const [current, setCurrent] = React.useState("Соусы");
-  const { data } = React.useContext(DataContext);
+  const { value } = React.useContext(DataContext);
   function chooseTab(tab) {
     setCurrent(tab);
   }
-  
+
   return (
     <div>
       <div className={IngridientsStyle.tabs_container}>
@@ -31,19 +31,19 @@ export function BurgerIngredients() {
       <div className={IngridientsStyle.container}>
         <h1>Булки</h1>
         <div className={IngridientsStyle.grid}>
-          {data.map((ingridient) => (
+          {value[0].map((ingridient) => (
             <Ingredient key={ingridient._id} {...ingridient} ex="bun" />
           ))}
         </div>
         <h1>Соусы</h1>
         <div className={IngridientsStyle.grid}>
-          {data.map((ingridient) => (
+          {value[0].map((ingridient) => (
             <Ingredient key={ingridient._id} {...ingridient} ex="sauce" />
           ))}
         </div>
         <h1>Начинки</h1>
         <div className={IngridientsStyle.grid}>
-          {data.map((ingridient) => (
+          {value[0].map((ingridient) => (
             <Ingredient key={ingridient._id} {...ingridient} ex="main" />
           ))}
         </div>
@@ -52,5 +52,5 @@ export function BurgerIngredients() {
   );
 }
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ApiConnect).isRequired,
+  value: PropTypes.arrayOf(ApiConnect).isRequired,
 };

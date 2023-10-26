@@ -15,7 +15,7 @@ function App() {
   const [price, setPrice] = React.useState(0);
   const [bunStatus, setStatus] = React.useState(false);
   const [ing, setIng] = React.useState({ bun: [], ingredients: [] });
-
+  const value = React.useMemo(() => [data, setData], [data, setData]);
   React.useEffect(() => {
     GetIngridients()
       .then((res) => {
@@ -34,7 +34,7 @@ function App() {
         <Header />
       </header>
       <main className={styles.main}>
-        <DataContext.Provider value={{ data, setData }}>
+        <DataContext.Provider value={{ value }}>
           <MoveContext.Provider value={{ moved, setMove }}>
             <PriceContext.Provider value={{ price, setPrice }}>
               <BunStatus.Provider value={{ bunStatus, setStatus }}>
