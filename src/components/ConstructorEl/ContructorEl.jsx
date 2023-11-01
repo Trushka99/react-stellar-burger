@@ -5,19 +5,21 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorElStyles from "./ConstructorEl.module.css";
-import { SeparateIngContext } from "../../services/Stellar-burger-contex";
-import { PriceContext } from "../../services/Stellar-burger-contex";
-
+import { DELETE_ITEM } from "../../services/actions/getIngridients";
+import { SET_PRICE } from "../../services/actions/constructor";
+import { useSelector, useDispatch } from "react-redux";
 export const ConstructorEl = (props) => {
-  const { ing, setIng } = React.useContext(SeparateIngContext);
-  const { price, setPrice } = React.useContext(PriceContext);
-
+  const price = useSelector((store) => store.Constructor.price)
+  const dispatch = useDispatch();
   const onDelete = () => {
-    setIng({
-      ...ing,
-      ingredients: ing.ingredients.filter((item) => item._id !== props._id),
+    dispatch({
+      type: DELETE_ITEM,
+      payload: props._id,
     });
-    setPrice(price - props.price);
+    dispatch({
+      type: SET_PRICE,
+      price: price - props.price,
+    });
   };
   if (props.type !== "bun") {
     return (

@@ -4,14 +4,18 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsStyle from "./BurgerIngredients.module.css";
 import { Ingredient } from "../Ingridient/Ingridient";
 import { ApiConnect } from "../ApiConnect/ApiConnect";
-import { DataContext } from "../../services/Stellar-burger-contex";
+import { useSelector, useDispatch } from 'react-redux';
+import { getItems } from "../../services/reducers/getIngridients";
 export function BurgerIngredients() {
+  const items = useSelector(store => store.Ingredients.items);
   const [current, setCurrent] = React.useState("Соусы");
-  const { value } = React.useContext(DataContext);
+  const dispatch = useDispatch()
   function chooseTab(tab) {
     setCurrent(tab);
   }
-
+  React.useEffect(() => {
+    dispatch(getItems ())
+  }, [dispatch]);
   return (
     <div>
       <div className={IngridientsStyle.tabs_container}>
@@ -31,19 +35,19 @@ export function BurgerIngredients() {
       <div className={IngridientsStyle.container}>
         <h1>Булки</h1>
         <div className={IngridientsStyle.grid}>
-          {value[0].map((ingridient) => (
+          {items.map((ingridient) => (
             <Ingredient key={ingridient._id} {...ingridient} ex="bun" />
           ))}
         </div>
         <h1>Соусы</h1>
         <div className={IngridientsStyle.grid}>
-          {value[0].map((ingridient) => (
+          {items.map((ingridient) => (
             <Ingredient key={ingridient._id} {...ingridient} ex="sauce" />
           ))}
         </div>
         <h1>Начинки</h1>
         <div className={IngridientsStyle.grid}>
-          {value[0].map((ingridient) => (
+          {items.map((ingridient) => (
             <Ingredient key={ingridient._id} {...ingridient} ex="main" />
           ))}
         </div>

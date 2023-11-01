@@ -11,26 +11,29 @@ import BurgerConstructorStyles from "./BurgerConstructor.module.css";
 import { ConstructorEl } from "../ConstructorEl/ContructorEl";
 import Modal from "../Modal/Modal";
 import { ApiConnect } from "../ApiConnect/ApiConnect";
-import { MoveContext } from "../../services/Stellar-burger-contex";
-import { PriceContext } from "../../services/Stellar-burger-contex";
-import { BunStatus } from "../../services/Stellar-burger-contex";
-import { SeparateIngContext } from "../../services/Stellar-burger-contex";
 import { PostOrder } from "../Api/api";
+import { useSelector, useDispatch } from "react-redux";
+import { SET_ORDER_NUMBER } from "../../services/actions/constructor";
 export function BurgerConstructor(props) {
   const [isOpen, setIsOpen] = useState(false);
-  const { moved } = React.useContext(MoveContext);
-  const { price } = React.useContext(PriceContext);
-  const { bunStatus } = React.useContext(BunStatus);
-  const { ing } = React.useContext(SeparateIngContext);
-  const [id, setId] = React.useState(0);
+  const Bun = useSelector((store) => store.Ingredients.bun);
+  const Ing = useSelector((store) => store.Ingredients.ingredients);
+  const Total = useSelector((store) => store.Ingredients.all);
+  const Order = useSelector((store) => store.Constructor.ordernumber);
+  const status = useSelector((store) => store.Constructor.bunstatus);
+  const price = useSelector((store) => store.Constructor.price);
 
-  const result = moved.map((item) => item._id);
+  const dispatch = useDispatch()
+  const result = Total.map((item) => item._id);
 
   const handleClick = () => {
     PostOrder(result)
       .then((data) => {
         let order = data.order.number;
-        setId(order);
+        dispatch({
+          type: SET_ORDER_NUMBER,
+          ordernumber:order
+        })
       })
 
       .catch((e) => {
@@ -41,28 +44,28 @@ export function BurgerConstructor(props) {
   return (
     <div>
       <div className={BurgerConstructorStyles.construction_container}>
-        {bunStatus ? (
+        {status ? (
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${ing.bun.name} "верх"`}
-            price={ing.bun.price}
-            thumbnail={ing.bun.image}
+            text={`${Bun.name} "верх"`}
+            price={Bun.price}
+            thumbnail={Bun.image}
             extraClass={BurgerConstructorStyles.burger_locked}
           />
         ) : null}
         <div className={BurgerConstructorStyles.ingridient_container}>
-          {ing.ingredients.map((ingridient) => (
+          {Ing.map((ingridient) => (
             <ConstructorEl key={ingridient._id} {...ingridient} />
           ))}
         </div>
-        {bunStatus ? (
+        {status ? (
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${ing.bun.name} "низ"`}
-            price={ing.bun.price}
-            thumbnail={ing.bun.image}
+            text={`${Bun.name} "низ"`}
+            price={Bun.price}
+            thumbnail={Bun.image}
             extraClass={BurgerConstructorStyles.burger_locked}
           />
         ) : null}
@@ -85,7 +88,7 @@ export function BurgerConstructor(props) {
         </Button>
       </div>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-        <OrderDetails number={id} />
+        <OrderDetails number={Order} />
       </Modal>
     </div>
   );
