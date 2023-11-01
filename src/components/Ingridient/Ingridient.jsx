@@ -1,3 +1,4 @@
+import React from "react";
 import {
   CurrencyIcon,
   Counter,
@@ -7,13 +8,33 @@ import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 import { useState } from "react";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
-
+import { MoveContext } from "../../services/Stellar-burger-contex";
+import { BunStatus } from "../../services/Stellar-burger-contex";
+import { SeparateIngContext } from "../../services/Stellar-burger-contex";
+import { PriceContext } from "../../services/Stellar-burger-contex";
 export const Ingredient = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { moved, setMove } = React.useContext(MoveContext);
+  const { setStatus } = React.useContext(BunStatus);
+  const { ing, setIng } = React.useContext(SeparateIngContext);
+  const { price, setPrice } = React.useContext(PriceContext);
 
+  const move = () => {
+    if (props.type === "bun") {
+      setMove([...moved, props]);
+      setIng({ ...ing, bun: props });
+      setPrice(price + props.price * 2);
+
+      setStatus(true);
+    } else {
+      setMove([...moved, props]);
+      setIng({ ...ing, ingredients: [...ing.ingredients, props] });
+      setPrice(price + props.price);
+    }
+  };
   if (props.type === props.ex) {
     return (
-      <div className={IngridientStyle.item}>
+      <div onClick={() => move()} className={IngridientStyle.item}>
         <img
           onClick={() => setIsOpen(true)}
           src={props.image}
@@ -32,12 +53,9 @@ export const Ingredient = (props) => {
         </Modal>
       </div>
     );
-  } else {
-    return null;
   }
-  
+  return null;
 };
-
 
 Ingredient.propTypes = {
   type: PropTypes.string,
