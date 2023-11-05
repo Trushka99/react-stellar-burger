@@ -8,52 +8,23 @@ import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 import { useState } from "react";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
+import { useDrag } from "react-dnd";
+import { useSelector } from "react-redux";
 
-import { useSelector, useDispatch } from "react-redux";
-import {
-  SET_ALL_TO_CONSTRUCTOR,
-  SET_ING,
-  SET_BUN,
-} from "../../services/actions/getIngridients";
-import { SET_BUN_STATUS, SET_PRICE } from "../../services/actions/constructor";
 export const Ingredient = (props) => {
+  const allIngredients = useSelector((store) => store.Ingredients.all);
+  const count = allIngredients.filter((item) => item._id === props._id).length;
   const [isOpen, setIsOpen] = useState(false);
-  const price = useSelector((store) => store.Constructor.price);
-
-  const dispatch = useDispatch();
-
-  const move = () => {
-    dispatch({
-      type: SET_ALL_TO_CONSTRUCTOR,
-      all: props,
-    });
-    if (props.type === "bun") {
-      dispatch({
-        type: SET_BUN,
-        bun: props,
-      });
-      dispatch({
-        type: SET_BUN_STATUS,
-        bunstatus: true,
-      });
-      dispatch({
-        type: SET_PRICE,
-        price: price + props.price * 2,
-      });
-    } else {
-      dispatch({
-        type: SET_ING,
-        ingredients: props,
-      });
-      dispatch({
-        type: SET_PRICE,
-        price: price + props.price,
-      });
-    }
-  };
+  const [{ opacity }, dragRef] = useDrag({
+    type: "animal",
+    item: props,
+    collect: (monitor) => ({
+      opacity: monitor.isDragging() ? 0.5 : 1,
+    }),
+  });
   if (props.type === props.ex) {
     return (
-      <div onClick={() => move()} className={IngridientStyle.item}>
+      <div style={{ opacity }} ref={dragRef} className={IngridientStyle.item}>
         <img
           onClick={() => setIsOpen(true)}
           src={props.image}
@@ -66,7 +37,7 @@ export const Ingredient = (props) => {
           <CurrencyIcon type="primary" />
         </div>
         <p className="text text_type_main-default">{props.name}</p>
-        <Counter count={1} size="default" extraClass="m-1" />
+        <Counter count={count} size="default" extraClass="m-1" />
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
           <IngredientDetails {...props} />
         </Modal>

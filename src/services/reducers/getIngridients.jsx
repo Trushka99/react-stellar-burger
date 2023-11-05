@@ -1,17 +1,14 @@
 import {
   GET_ITEMS_REQUEST,
   SET_ALL_TO_CONSTRUCTOR,
-  SET_ING,
   SET_BUN,
-  DELETE_ITEM,
 } from "../actions/getIngridients";
 import { GetIngridients } from "../../components/Api/api";
+
 const initialState = {
   items: [],
-  currentTab: "items",
   all: [],
   bun: [],
-  ingredients: [],
 };
 
 export const ingReducer = (state = initialState, action) => {
@@ -19,7 +16,8 @@ export const ingReducer = (state = initialState, action) => {
     case GET_ITEMS_REQUEST: {
       return {
         ...state,
-        items: action.items,
+        items: action.items, 
+    
       };
     }
     case SET_ALL_TO_CONSTRUCTOR: {
@@ -29,24 +27,13 @@ export const ingReducer = (state = initialState, action) => {
       };
     }
 
-    case SET_ING: {
-      return {
-        ...state,
-        ingredients: [...state.ingredients, action.ingredients],
-      };
-    }
     case SET_BUN: {
       return {
         ...state,
         bun: action.bun,
       };
     }
-    case DELETE_ITEM: {
-      return {
-        ...state,
-        ingredients: state.ingredients.filter((obj) => obj._id !== action.payload),
-      };
-    }
+
     default: {
       return state;
     }
