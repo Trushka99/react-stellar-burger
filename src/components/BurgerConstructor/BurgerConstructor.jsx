@@ -10,58 +10,44 @@ import {
 import BurgerConstructorStyles from "./BurgerConstructor.module.css";
 import { ConstructorEl } from "../ConstructorEl/ContructorEl";
 import Modal from "../Modal/Modal";
-import { ApiConnect } from "../ApiConnect/ApiConnect";
-import { PostOrder } from "../Api/api";
+import { postOrder } from "../../utils/api";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_ORDER_NUMBER } from "../../services/actions/constructor";
 import { useDrop } from "react-dnd";
-import {
-  SET_ALL_TO_CONSTRUCTOR,
-  SET_BUN,
-} from "../../services/actions/getIngridients";
+import { setBun } from "../../services/actions/getIngridients";
 import {
   SET_PRICE,
-  SET_ING_STATUS,
-  SET_BUN_STATUS,
+  setIngStatus,
+  setBunStatus,
+  setOrderNumber,
+  resetIngredients,
 } from "../../services/actions/constructor";
 import { v4 as uuidv4 } from "uuid";
-import { selectIngredient } from "../../services/reducers/constructor";
+import { selectIngredient } from "../../services/actions/constructor";
+import { selectAll, resetBuns } from "../../services/actions/getIngridients";
 export function BurgerConstructor() {
   const [isOpen, setIsOpen] = useState(false);
 
   const Bun = useSelector((store) => store.Ingredients.bun);
-  const Ing = useSelector((store) => store.Constructor.ingredients);
+  const Ing = useSelector((store) => store.burgerConstructor.ingredients);
   const Total = useSelector((store) => store.Ingredients.all);
-  const Order = useSelector((store) => store.Constructor.ordernumber);
-  const bunstatus = useSelector((store) => store.Constructor.bunstatus);
-  const ingstatus = useSelector((store) => store.Constructor.ingStatus);
-  const price = useSelector((store) => store.Constructor.price);
+  const Order = useSelector((store) => store.burgerConstructor.ordernumber);
+  const bunstatus = useSelector((store) => store.burgerConstructor.bunstatus);
+  const ingstatus = useSelector((store) => store.burgerConstructor.ingStatus);
+  const price = useSelector((store) => store.burgerConstructor.price);
   const dispatch = useDispatch();
   const result = Total.map((item) => item._id);
   const moveItem = (item) => {
-    dispatch({
-      type: SET_ALL_TO_CONSTRUCTOR,
-      all: item,
-    });
+    dispatch(selectAll(uuidv4(), item));
 
     if (item.type === "bun") {
-      dispatch({
-        type: SET_BUN_STATUS,
-        bunstatus: true,
-      });
-      dispatch({
-        type: SET_BUN,
-        bun: item,
-      });
+      dispatch(setBunStatus(true));
+      dispatch(setBun(item));
       dispatch({
         type: SET_PRICE,
         price: price + item.price * 2,
       });
     } else {
-      dispatch({
-        type: SET_ING_STATUS,
-        ingStatus: true,
-      });
+      dispatch(setIngStatus(true));
       dispatch(selectIngredient(uuidv4(), item));
 
       dispatch({
@@ -71,7 +57,7 @@ export function BurgerConstructor() {
     }
   };
   const [{ isHover }, dropTarget] = useDrop({
-    accept: "animal",
+    accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
@@ -82,17 +68,24 @@ export function BurgerConstructor() {
   });
 
   const handleClick = () => {
-    PostOrder(result)
+    postOrder(result)
       .then((data) => {
         let order = data.order.number;
+        dispatch(setOrderNumber(order));
+      })
+      .then(() => {
+        dispatch(resetIngredients());
+        dispatch(resetBuns());
+        dispatch(setBunStatus(false));
+        dispatch(setIngStatus(false));
         dispatch({
-          type: SET_ORDER_NUMBER,
-          ordernumber: order,
+          type: SET_PRICE,
+          price: 0,
         });
       })
 
-      .catch((e) => {
-        console.log(e);
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -152,21 +145,40 @@ export function BurgerConstructor() {
           <p className="text text_type_digits-default mr-2">{price}</p>
           <CurrencyIcon />
         </div>
-        <Button
-          onClick={() => {
-            handleClick();
-            setIsOpen(true);
-          }}
-          htmlType="button"
-          type="primary"
-          size="large"
-        >
-          Оформить заказ
-        </Button>
+        {bunstatus && ingstatus ? (
+          <Button
+            onClick={() => {
+              setIsOpen(true);
+
+              handleClick();
+            }}
+            htmlType="button"
+            type="primary"
+            size="large"
+          >
+            Оформить заказ
+          </Button>
+        ) : (
+          <Button
+            disabled
+            onClick={() => {
+              setIsOpen(true);
+
+              handleClick();
+            }}
+            htmlType="button"
+            type="primary"
+            size="large"
+          >
+            Оформить заказ
+          </Button>
+        )}
       </div>
-      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-        <OrderDetails number={Order} />
-      </Modal>
+      {isOpen && (
+        <Modal onClose={() => setIsOpen(false)}>
+          <OrderDetails number={Order} />
+        </Modal>
+      )}
     </div>
   );
 }

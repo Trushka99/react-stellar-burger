@@ -2,8 +2,9 @@ import {
   GET_ITEMS_REQUEST,
   SET_ALL_TO_CONSTRUCTOR,
   SET_BUN,
+  DELETE_FROM_ALL,
+  RESET_BUNS,
 } from "../actions/getIngridients";
-import { GetIngridients } from "../../components/Api/api";
 
 const initialState = {
   items: [],
@@ -16,14 +17,19 @@ export const ingReducer = (state = initialState, action) => {
     case GET_ITEMS_REQUEST: {
       return {
         ...state,
-        items: action.items, 
-    
+        items: action.items,
       };
     }
     case SET_ALL_TO_CONSTRUCTOR: {
       return {
         ...state,
-        all: [...state.all, action.all],
+        all: [
+          ...state.all,
+          {
+            Id: action.Id,
+            ...action.payload,
+          },
+        ],
       };
     }
 
@@ -34,21 +40,14 @@ export const ingReducer = (state = initialState, action) => {
       };
     }
 
+    case RESET_BUNS: {
+      return {
+        ...state,
+        bun: [],
+      };
+    }
     default: {
       return state;
     }
   }
 };
-
-export function getItems() {
-  return function (dispatch) {
-    GetIngridients().then((res) => {
-      if (res && res.success) {
-        dispatch({
-          type: GET_ITEMS_REQUEST,
-          items: res.data,
-        });
-      }
-    });
-  };
-}

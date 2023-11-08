@@ -1,6 +1,5 @@
 import OrderStyle from "./OrderDetails.module.css";
-import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import { orderDetailsTypes } from "../../utils/types";
 export const OrderDetails = (props) => {
   return (
     <div className={OrderStyle.container}>
@@ -12,4 +11,4 @@ export const OrderDetails = (props) => {
     </div>
   );
 };
- 
+OrderDetails.propTypes = orderDetailsTypes.isRequired

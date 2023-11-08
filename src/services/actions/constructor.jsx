@@ -1,7 +1,67 @@
 export const SET_PRICE = "SET_PRICE";
 export const SET_ORDER_NUMBER = "SET_ORDER_NUMBER";
 export const SET_BUN_STATUS = "SET_BUN_STATUS";
-export const ADD_TO_CONSTRUCTOR = "ADD_TO_CONSTRUCTOR"
-export const DELETE_FROM_CONSTRUCTOR = "DELETE_FROM_CONSTRUCTOR"
+export const ADD_TO_CONSTRUCTOR = "ADD_TO_CONSTRUCTOR";
+export const DELETE_FROM_CONSTRUCTOR = "DELETE_FROM_CONSTRUCTOR";
 export const SET_ING_STATUS = "SET_ING_STATUS";
-export const CONSTRUCTOR_REPLACE = "CONSTRUCTOR_REPLACE"
+export const CONSTRUCTOR_REPLACE = "CONSTRUCTOR_REPLACE";
+export const RESET_INGREDIENTS = "RESET_INGREDIENTS"
+
+export const selectIngredient = (id, ingredients) => {
+  return function (dispatch) {
+    dispatch({
+      type: ADD_TO_CONSTRUCTOR,
+      Id: id,
+      payload: ingredients,
+    });
+  };
+};
+export const moveIngredientInConstructor = (payload) => {
+  return function (dispatch) {
+    dispatch({
+      type: CONSTRUCTOR_REPLACE,
+      payload,
+    });
+  };
+};
+
+export const setOrderNumber = (order) => {
+  return function (dispatch) {
+    dispatch({
+      type: SET_ORDER_NUMBER,
+      ordernumber: order,
+    });
+  };
+};
+
+export const setBunStatus = (status) => {
+  return function (dispatch) {
+    dispatch({
+      type: SET_BUN_STATUS,
+      bunstatus: status,
+    });
+  };
+};
+export const setIngStatus = (status) => {
+  return function (dispatch) {
+    dispatch({
+      type: SET_ING_STATUS,
+      ingStatus: status,
+    });
+  };
+};
+export const deleteFromConstructor = (item) => {
+  return function (dispatch) {
+    dispatch({
+      type: DELETE_FROM_CONSTRUCTOR,
+      payload: item.Id,
+    });
+  };
+};
+export const resetIngredients = () => {
+  return function (dispatch) {
+    dispatch({
+      type: RESET_INGREDIENTS,
+    })
+  }
+}

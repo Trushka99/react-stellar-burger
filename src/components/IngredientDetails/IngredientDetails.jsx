@@ -4,8 +4,14 @@ import PropTypes from "prop-types";
 export const IngredientDetails = (props) => {
   return (
     <div className={IngridientStyle.container}>
-      <h2 className={`${IngridientStyle.title} text text_type_main-large`}>Детали ингридиента</h2>
-      <img className={IngridientStyle.img} src={props.image_large}></img>
+      <h2 className={`${IngridientStyle.title} text text_type_main-large`}>
+        Детали ингридиента
+      </h2>
+      <img
+        className={IngridientStyle.img}
+        src={props.image_large}
+        alt="Изображение ингридиента"
+      ></img>
       <div>
         <p className="text text_type_main-medium">{props.name}</p>
       </div>
@@ -36,7 +42,7 @@ export const IngredientDetails = (props) => {
         </li>
         <li className={IngridientStyle.nutrit}>
           <p className="text text_type_main-default text_color_inactive">
-            Углеводы, г 
+            Углеводы, г
           </p>
           <p className="text text_type_main-default text_color_inactive">
             {props.carbohydrates}

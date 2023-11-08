@@ -1,27 +1,24 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorElStyles from "./ConstructorEl.module.css";
-import { DELETE_FROM_CONSTRUCTOR } from "../../services/actions/constructor";
-import { SET_PRICE } from "../../services/actions/constructor";
-import { moveIngredientInConstructor } from "../../services/reducers/constructor";
+import {
+  deleteFromConstructor,
+  SET_PRICE,
+  moveIngredientInConstructor,
+} from "../../services/actions/constructor";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
-
+import { constructorTypes } from "../../utils/types";
 export const ConstructorEl = (props) => {
-  const price = useSelector((store) => store.Constructor.price);
+  const price = useSelector((store) => store.burgerConstructor.price);
   const id = props._id;
   const index = props.index;
   const dispatch = useDispatch();
   const onDelete = () => {
-    dispatch({
-      type: DELETE_FROM_CONSTRUCTOR,
-      payload: props.Id,
-    });
-
+    dispatch(deleteFromConstructor(props));
     dispatch({
       type: SET_PRICE,
       price: price - props.price,
@@ -93,8 +90,4 @@ export const ConstructorEl = (props) => {
   return null;
 };
 
-ConstructorEl.propTypes = {
-  image: PropTypes.string,
-  price: PropTypes.number,
-  name: PropTypes.string,
-};
+ConstructorEl.propTypes = constructorTypes.isRequired;

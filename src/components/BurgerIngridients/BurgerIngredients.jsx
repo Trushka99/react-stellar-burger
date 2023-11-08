@@ -3,16 +3,16 @@ import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsStyle from "./BurgerIngredients.module.css";
 import { Ingredient } from "../Ingridient/Ingridient";
-import { ApiConnect } from "../ApiConnect/ApiConnect";
 import { useSelector, useDispatch } from "react-redux";
-import { getItems } from "../../services/reducers/getIngridients";
 import { useInView } from "react-intersection-observer";
-import { v4 as uuidv4 } from 'uuid';
 
 export function BurgerIngredients() {
   const items = useSelector((store) => store.Ingredients.items);
   const [current, setCurrent] = React.useState("Соусы");
   const dispatch = useDispatch();
+  const allIngredients = useSelector(
+    (store) => store.burgerConstructor.ingredients
+  );
 
   function chooseTab(tab) {
     setCurrent(tab);
@@ -23,7 +23,6 @@ export function BurgerIngredients() {
   const [inner, scrolledInner] = useInView({ threshold: 0 });
 
   React.useEffect(() => {
-    dispatch(getItems());
     if (scrolledBuns) {
       chooseTab("Булки");
     } else if (scrolleSause) {
@@ -52,19 +51,35 @@ export function BurgerIngredients() {
         <h1>Булки</h1>
         <div ref={buns} className={IngridientsStyle.grid}>
           {items.map((ingridient) => (
-            <Ingredient _key={uuidv4()} key={ingridient._id} {...ingridient} ex="bun" />
+            <Ingredient key={ingridient._id} {...ingridient} ex="bun" />
           ))}
         </div>
         <h1>Соусы</h1>
         <div ref={sause} className={IngridientsStyle.grid}>
           {items.map((ingridient) => (
-            <Ingredient key={ingridient._id} {...ingridient} ex="sauce" />
+            <Ingredient
+              count={
+                allIngredients.filter((item) => item._id === ingridient._id)
+                  .length
+              }
+              key={ingridient._id}
+              {...ingridient}
+              ex="sauce"
+            />
           ))}
         </div>
         <h1>Начинки</h1>
         <div ref={inner} className={IngridientsStyle.grid}>
           {items.map((ingridient) => (
-            <Ingredient key={ingridient._id} {...ingridient} ex="main" />
+            <Ingredient
+              count={
+                allIngredients.filter((item) => item._id === ingridient._id)
+                  .length
+              }
+              key={ingridient._id}
+              {...ingridient}
+              ex="main"
+            />
           ))}
         </div>
       </div>

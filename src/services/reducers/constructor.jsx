@@ -5,7 +5,9 @@ import {
   ADD_TO_CONSTRUCTOR,
   DELETE_FROM_CONSTRUCTOR,
   SET_ING_STATUS,
-  CONSTRUCTOR_REPLACE
+  CONSTRUCTOR_REPLACE,
+  RESET_INGREDIENTS
+  
 } from "../actions/constructor";
 import update from 'immutability-helper';
 
@@ -77,17 +79,13 @@ export const constReducer = (state = initialState, action) => {
           ],
         }),
       };
+      case RESET_INGREDIENTS: 
+      return {
+        ...state,
+        ingredients: [],
+      }
     default: {
       return state;
     }
   }
 };
-export const selectIngredient = (id, ingredients) => ({
-  type: ADD_TO_CONSTRUCTOR,
-  Id: id,
-  payload: ingredients,
-});
-export const moveIngredientInConstructor = (payload) => ({
-  type: CONSTRUCTOR_REPLACE,
-  payload
-});
