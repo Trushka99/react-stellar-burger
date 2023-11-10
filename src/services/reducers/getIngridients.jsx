@@ -2,14 +2,15 @@ import {
   GET_ITEMS_REQUEST,
   SET_ALL_TO_CONSTRUCTOR,
   SET_BUN,
-  DELETE_FROM_ALL,
   RESET_BUNS,
+  SET_TO_MODAL,
 } from "../actions/getIngridients";
 
 const initialState = {
   items: [],
   all: [],
-  bun: [],
+  bun: [{ name: "" }],
+  ingModal: [],
 };
 
 export const ingReducer = (state = initialState, action) => {
@@ -45,6 +46,12 @@ export const ingReducer = (state = initialState, action) => {
         ...state,
         bun: [],
       };
+    }
+    case SET_TO_MODAL: {
+      return {
+        ...state,
+        ingModal: action.ingModal
+      }
     }
     default: {
       return state;

@@ -9,8 +9,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorStyles from "./BurgerConstructor.module.css";
 import { ConstructorEl } from "../ConstructorEl/ContructorEl";
-import Modal from "../Modal/Modal";
-import { postOrder } from "../../utils/api";
+import { Modal } from "../Modal/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { setBun } from "../../services/actions/getIngridients";
@@ -27,7 +26,8 @@ import { selectAll, resetBuns } from "../../services/actions/getIngridients";
 export function BurgerConstructor() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const Bun = useSelector((store) => store.Ingredients.bun);
+  const Buns = useSelector((store) => store.Ingredients.bun);
+  const bun = Buns[0];
   const Ing = useSelector((store) => store.burgerConstructor.ingredients);
   const Total = useSelector((store) => store.Ingredients.all);
   const Order = useSelector((store) => store.burgerConstructor.ordernumber);
@@ -41,7 +41,7 @@ export function BurgerConstructor() {
 
     if (item.type === "bun") {
       dispatch(setBunStatus(true));
-      dispatch(setBun(item));
+      dispatch(setBun([item, item]));
       dispatch({
         type: SET_PRICE,
         price: price + item.price * 2,
@@ -68,11 +68,7 @@ export function BurgerConstructor() {
   });
 
   const handleClick = () => {
-    postOrder(result)
-      .then((data) => {
-        let order = data.order.number;
-        dispatch(setOrderNumber(order));
-      })
+    dispatch(setOrderNumber(result))
       .then(() => {
         dispatch(resetIngredients());
         dispatch(resetBuns());
@@ -99,9 +95,9 @@ export function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${Bun.name} "верх"`}
-            price={Bun.price}
-            thumbnail={Bun.image}
+            text={`${bun.name} "верх"`}
+            price={bun.price}
+            thumbnail={bun.image}
             extraClass={BurgerConstructorStyles.burger_locked}
           />
         ) : (
@@ -129,9 +125,9 @@ export function BurgerConstructor() {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${Bun.name} "низ"`}
-            price={Bun.price}
-            thumbnail={Bun.image}
+            text={`${bun.name} "низ"`}
+            price={bun.price}
+            thumbnail={bun.image}
             extraClass={BurgerConstructorStyles.burger_locked}
           />
         ) : (
@@ -145,34 +141,19 @@ export function BurgerConstructor() {
           <p className="text text_type_digits-default mr-2">{price}</p>
           <CurrencyIcon />
         </div>
-        {bunstatus && ingstatus ? (
-          <Button
-            onClick={() => {
-              setIsOpen(true);
+        <Button
+          disabled={!(bunstatus && ingstatus)}
+          onClick={() => {
+            setIsOpen(true);
 
-              handleClick();
-            }}
-            htmlType="button"
-            type="primary"
-            size="large"
-          >
-            Оформить заказ
-          </Button>
-        ) : (
-          <Button
-            disabled
-            onClick={() => {
-              setIsOpen(true);
-
-              handleClick();
-            }}
-            htmlType="button"
-            type="primary"
-            size="large"
-          >
-            Оформить заказ
-          </Button>
-        )}
+            handleClick();
+          }}
+          htmlType="button"
+          type="primary"
+          size="large"
+        >
+          Оформить заказ
+        </Button>
       </div>
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>

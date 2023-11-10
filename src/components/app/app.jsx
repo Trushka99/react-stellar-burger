@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./app.module.css";
-import { Header } from "../header/header";
+import styles from "./App.module.css";
+import { Header } from "../Headers/Header";
 import { BurgerIngredients } from "../BurgerIngridients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
 import { DndProvider } from "react-dnd";

@@ -4,6 +4,8 @@ export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";
 export const SET_BUN = "SET_BUN";
 export const SET_ALL_TO_CONSTRUCTOR = "SET_ALL_TO_CONSTRUCTOR";
 export const RESET_BUNS = "RESET_BUNS";
+export const SET_TO_MODAL = "SET_TO_MODAL";
+
 export function getItems() {
   return function (dispatch) {
     getIngridients()
@@ -38,6 +40,14 @@ export const resetBuns = () => {
   return function (dispatch) {
     dispatch({
       type: RESET_BUNS,
+    });
+  };
+};
+export const setToModal = (item) => {
+  return function (dispatch) {
+    dispatch({
+      type: SET_TO_MODAL,
+      ingModal: item,
     });
   };
 };

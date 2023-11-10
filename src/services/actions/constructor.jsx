@@ -1,3 +1,5 @@
+import { postOrder } from "../../utils/api";
+
 export const SET_PRICE = "SET_PRICE";
 export const SET_ORDER_NUMBER = "SET_ORDER_NUMBER";
 export const SET_BUN_STATUS = "SET_BUN_STATUS";
@@ -5,8 +7,7 @@ export const ADD_TO_CONSTRUCTOR = "ADD_TO_CONSTRUCTOR";
 export const DELETE_FROM_CONSTRUCTOR = "DELETE_FROM_CONSTRUCTOR";
 export const SET_ING_STATUS = "SET_ING_STATUS";
 export const CONSTRUCTOR_REPLACE = "CONSTRUCTOR_REPLACE";
-export const RESET_INGREDIENTS = "RESET_INGREDIENTS"
-
+export const RESET_INGREDIENTS = "RESET_INGREDIENTS";
 export const selectIngredient = (id, ingredients) => {
   return function (dispatch) {
     dispatch({
@@ -21,15 +22,6 @@ export const moveIngredientInConstructor = (payload) => {
     dispatch({
       type: CONSTRUCTOR_REPLACE,
       payload,
-    });
-  };
-};
-
-export const setOrderNumber = (order) => {
-  return function (dispatch) {
-    dispatch({
-      type: SET_ORDER_NUMBER,
-      ordernumber: order,
     });
   };
 };
@@ -62,6 +54,23 @@ export const resetIngredients = () => {
   return function (dispatch) {
     dispatch({
       type: RESET_INGREDIENTS,
-    })
-  }
-}
+    });
+  };
+};
+export const setOrderNumber = (array) => {
+  return function (dispatch) {
+    postOrder(array)
+      .then((res) => {
+        let order = res.order.number;
+        if (res && res.success) {
+          dispatch({
+            type: SET_ORDER_NUMBER,
+            ordernumber: order,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};

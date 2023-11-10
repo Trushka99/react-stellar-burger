@@ -1,15 +1,25 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsStyle from "./BurgerIngredients.module.css";
 import { Ingredient } from "../Ingridient/Ingridient";
 import { useSelector, useDispatch } from "react-redux";
 import { useInView } from "react-intersection-observer";
-
+import { Modal } from "../Modal/Modal";
+import { setToModal } from "../../services/actions/getIngridients";
 export function BurgerIngredients() {
+  const Bun = useSelector((store) => store.Ingredients.bun);
   const items = useSelector((store) => store.Ingredients.items);
+  const modalDets = useSelector((store) => store.Ingredients.ingModal);
+
   const [current, setCurrent] = React.useState("Соусы");
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = React.useState(false);
+  const openModal = (details) => {
+    setIsOpen(true);
+    dispatch(setToModal(details));
+  };
+
   const allIngredients = useSelector(
     (store) => store.burgerConstructor.ingredients
   );
@@ -30,7 +40,7 @@ export function BurgerIngredients() {
     } else if (scrolledInner) {
       chooseTab("Начинки");
     }
-  }, [dispatch, scrolledBuns, scrolleSause, scrolledInner]);
+  }, [scrolledBuns, scrolleSause, scrolledInner]);
   return (
     <div>
       <div className={IngridientsStyle.tabs_container}>
@@ -51,13 +61,20 @@ export function BurgerIngredients() {
         <h1>Булки</h1>
         <div ref={buns} className={IngridientsStyle.grid}>
           {items.map((ingridient) => (
-            <Ingredient key={ingridient._id} {...ingridient} ex="bun" />
+            <Ingredient
+              handleclick={() => openModal(ingridient)}
+              count={Bun.filter((item) => item._id === ingridient._id).length}
+              key={ingridient._id}
+              {...ingridient}
+              ex="bun"
+            />
           ))}
         </div>
         <h1>Соусы</h1>
         <div ref={sause} className={IngridientsStyle.grid}>
           {items.map((ingridient) => (
             <Ingredient
+              handleclick={() => openModal(ingridient)}
               count={
                 allIngredients.filter((item) => item._id === ingridient._id)
                   .length
@@ -72,6 +89,7 @@ export function BurgerIngredients() {
         <div ref={inner} className={IngridientsStyle.grid}>
           {items.map((ingridient) => (
             <Ingredient
+              handleclick={() => openModal(ingridient)}
               count={
                 allIngredients.filter((item) => item._id === ingridient._id)
                   .length
@@ -83,6 +101,11 @@ export function BurgerIngredients() {
           ))}
         </div>
       </div>
+      {isOpen && (
+        <Modal onClose={() => setIsOpen(false)}>
+          <IngredientDetails {...modalDets} />
+        </Modal>
+      )}
     </div>
   );
 }
