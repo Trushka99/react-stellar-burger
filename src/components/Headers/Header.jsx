@@ -4,7 +4,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import headerStyle from './header.module.css'
+import headerStyle from './Header.module.css'
 export function Header() {
   return (
     <header className={headerStyle.header}>
