@@ -1,10 +1,8 @@
 import {
   SET_PRICE,
   SET_ORDER_NUMBER,
-  SET_BUN_STATUS,
   ADD_TO_CONSTRUCTOR,
   DELETE_FROM_CONSTRUCTOR,
-  SET_ING_STATUS,
   CONSTRUCTOR_REPLACE,
   RESET_INGREDIENTS
   
@@ -15,8 +13,7 @@ const initialState = {
   ingredients: [],
   price: 0,
   ordernumber: "",
-  bunstatus: false,
-  ingStatus: false,
+  
 };
 
 export const constReducer = (state = initialState, action) => {
@@ -33,12 +30,7 @@ export const constReducer = (state = initialState, action) => {
         ordernumber: action.ordernumber,
       };
     }
-    case SET_BUN_STATUS: {
-      return {
-        ...state,
-        bunstatus: action.bunstatus,
-      };
-    }
+
     case ADD_TO_CONSTRUCTOR: {
       return {
         ...state,
@@ -59,12 +51,7 @@ export const constReducer = (state = initialState, action) => {
         ),
       };
     }
-    case SET_ING_STATUS: {
-      return {
-        ...state,
-        ingStatus: action.ingStatus,
-      };
-    }
+ 
     case CONSTRUCTOR_REPLACE:
       return {
         ...state,

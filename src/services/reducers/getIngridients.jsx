@@ -9,7 +9,7 @@ import {
 const initialState = {
   items: [],
   all: [],
-  bun: [{ name: "" }],
+  bun: [],
   ingModal: [],
 };
 
