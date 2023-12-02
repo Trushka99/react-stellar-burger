@@ -75,7 +75,7 @@ function App() {
               }
             />
             <Route
-              path="/forgot-pass"
+              path="/forgot-password"
               element={
                 <ProtectedRouteElement
                   needsAuth={false}
@@ -84,7 +84,7 @@ function App() {
               }
             />
             <Route
-              path="/change-pass"
+              path="/reset-password"
               element={
                 <ProtectedRouteElement
                   needsAuth={false}
@@ -111,7 +111,7 @@ function App() {
               path="/ingredients/:id"
               element={
                 <Modal onClose={onClose}>
-                  <IngredientDetails {...modalIners} />
+                  <IngredientDetails/>
                 </Modal>
               }
             />

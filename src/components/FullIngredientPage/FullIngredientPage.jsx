@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import IngridientStyle from "../IngredientDetails/IngredientDetails.module.css";
 export const FullIngredientPage = () => {

@@ -13,11 +13,21 @@ function checkResponse(res) {
   }
   return res.json();
 }
+// создаем функцию проверки на `success`
+const checkSuccess = (res) => {
+  if (res && res.success) {
+    return res;
+  }
+  // не забываем выкидывать ошибку, чтобы она попала в `catch`
+  return Promise.reject(`Ответ не success: ${res}`);
+};
 
-export function getIngridients() {
+export function getIngredients() {
   return fetch(`${BASE_URL.URL}/ingredients`, {
     method: "GET",
-  }).then((res) => checkResponse(res));
+  })
+    .then((res) => checkResponse(res))
+    .then((res) => checkSuccess(res));
 }
 
 export function postOrder(array) {
@@ -30,7 +40,9 @@ export function postOrder(array) {
     body: JSON.stringify({
       ingredients: array,
     }),
-  }).then((res) => checkResponse(res));
+  })
+    .then((res) => checkResponse(res))
+    .then((res) => checkSuccess(res));
 }
 export function registerUser(email, password, name) {
   return fetch(`${BASE_URL.URL}/auth/register`, {
@@ -41,7 +53,9 @@ export function registerUser(email, password, name) {
       password: password,
       name: name,
     }),
-  }).then((res) => checkResponse(res));
+  })
+    .then((res) => checkResponse(res))
+    .then((res) => checkSuccess(res));
 }
 
 export function sendPassword(email) {
@@ -51,7 +65,9 @@ export function sendPassword(email) {
     body: JSON.stringify({
       email: email,
     }),
-  }).then((res) => checkResponse(res));
+  })
+    .then((res) => checkResponse(res))
+    .then((res) => checkSuccess(res));
 }
 export function changedPassword(pass, code) {
   return fetch(`${BASE_URL.URL}/password-reset/reset`, {
@@ -61,7 +77,9 @@ export function changedPassword(pass, code) {
       password: pass,
       token: code,
     }),
-  }).then((res) => checkResponse(res));
+  })
+    .then((res) => checkResponse(res))
+    .then((res) => checkSuccess(res));
 }
 export function login(user) {
   return fetch(`${BASE_URL.URL}/auth/login`, {
@@ -71,7 +89,9 @@ export function login(user) {
       email: user.email,
       password: user.password,
     }),
-  }).then((res) => checkResponse(res));
+  })
+    .then((res) => checkResponse(res))
+    .then((res) => checkSuccess(res));
 }
 
 export const getUser = async () =>
@@ -95,16 +115,19 @@ export function logout() {
     body: JSON.stringify({
       token: getCookie("refreshToken"),
     }),
-  }).then((res) => checkResponse(res));
+  })
+    .then((res) => checkResponse(res))
+    .then((res) => checkSuccess(res));
 }
 export function updateUser(data) {
   return fetch(`${BASE_URL.URL}/auth/user`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + getCookie('accessToken')
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   })
-    .then(res => checkResponse(res))
+    .then((res) => checkResponse(res))
+    .then((res) => checkSuccess(res));
 }

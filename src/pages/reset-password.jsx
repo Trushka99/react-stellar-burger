@@ -16,6 +16,12 @@ export function ResetPassword() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const requestCode = (e) => {
+    e.preventDefault();
+    sendPassword(user.email)
+      .then(() => dispatch(stateCodeStatus()))
+      .then(() => navigate("/reset-password", { replace: true }));
+  };
   const user = useSelector((store) => store.loginActions.user);
 
   const onChange = (e) => {
@@ -24,7 +30,7 @@ export function ResetPassword() {
 
   return (
     <div>
-      <div className={Loginstyles.login_container}>
+      <form onSubmit={requestCode} className={Loginstyles.login_container}>
         <h1>Восстановление пароля</h1>
         <EmailInput
           value={user.email}
@@ -36,12 +42,8 @@ export function ResetPassword() {
         />
 
         <Button
+          htmlType="submit"
           extraClass={`${Loginstyles.reccover_pass_bt} mb-20`}
-          onClick={() =>
-            sendPassword(user.email)
-              .then(() => dispatch(stateCodeStatus()))
-              .then(() => navigate("/change-pass", { replace: true }))
-          }
         >
           Восстановить
         </Button>
@@ -53,7 +55,7 @@ export function ResetPassword() {
             </Link>
           </p>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

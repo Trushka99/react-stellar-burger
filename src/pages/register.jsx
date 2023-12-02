@@ -22,7 +22,12 @@ export function RegisterPage() {
   const navigate = useNavigate();
 
   const user = useSelector((store) => store.loginActions.user);
-
+  const register = (e) => {
+    e.preventDefault();
+    registerUser(user.email, user.password, user.name).then(() =>
+      navigate("/", { replace: true })
+    );
+  };
   const onChange = (e) => {
     dispatch(stateDetails({ ...user, [e.target.name]: e.target.value }));
   };
@@ -32,7 +37,7 @@ export function RegisterPage() {
 
   return (
     <div>
-      <div className={Loginstyles.login_container}>
+      <form onSubmit={register} className={Loginstyles.login_container}>
         <h1 className=" mb-6">Регистрация</h1>
         <Input
           type={"text"}
@@ -66,12 +71,8 @@ export function RegisterPage() {
           onChange={onChange}
         />
         <Button
+          htmlType="submit"
           extraClass={`${Loginstyles.register_button} mb-20`}
-          onClick={() =>
-            registerUser(user.email, user.password, user.name).then(() =>
-              navigate("/", { replace: true })
-            )
-          }
         >
           Зарегистрироваться
         </Button>
@@ -83,7 +84,7 @@ export function RegisterPage() {
             </Link>
           </p>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

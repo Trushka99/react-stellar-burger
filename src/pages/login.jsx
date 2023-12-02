@@ -20,7 +20,7 @@ export function LoginPage() {
     dispatch(stateDetails({ ...user, [e.target.name]: e.target.value }));
   };
 
-  let login = React.useCallback(
+  const login = React.useCallback(
     (e) => {
       e.preventDefault();
       auth.signIn(user);
@@ -34,7 +34,7 @@ export function LoginPage() {
   }
 
   return (
-    <div>
+    <form onSubmit={login}>
       <div className={Loginstyles.login_container}>
         <h1>Вход</h1>
         <EmailInput
@@ -57,7 +57,7 @@ export function LoginPage() {
           extraClass="mb-6"
           onChange={onChange}
         />
-        <Button extraClass={`${Loginstyles.button} mb-20`} onClick={login}>
+        <Button htmlType="submit" extraClass={`${Loginstyles.button} mb-20`}>
           Войти
         </Button>
         <div className={Loginstyles.links}>
@@ -71,12 +71,12 @@ export function LoginPage() {
         <div className={Loginstyles.links}>
           <p>Забыли пароль?</p>
           <p>
-            <Link className={`${Loginstyles.link} ml-2`} to="/forgot-pass">
+            <Link className={`${Loginstyles.link} ml-2`} to="/forgot-password">
               Восстановить пароль
             </Link>
           </p>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

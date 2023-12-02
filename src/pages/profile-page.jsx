@@ -28,7 +28,7 @@ export function ProfilePage() {
     });
   }, [auth, navigate]);
   React.useEffect(() => {
-    getUser();
+     getUser();
   }, []);
   const cancel = () => {
     setDisabled(true);
@@ -69,7 +69,7 @@ export function ProfilePage() {
             В этом разделе вы можете измменить свои персональные данные
           </p>
         </div>
-        <div>
+        <form onSubmit={updateProfile}>
           <Input
             onChange={onChange}
             value={user.name}
@@ -110,9 +110,11 @@ export function ProfilePage() {
             disabled={disabled}
             onIconClick={() => setDisabled(false)}
           />
-          <Button extraClass="mr-4" onClick={cancel}>Отменить</Button>
-          <Button onClick={updateProfile}>Сохранить</Button>
-        </div>
+          <Button htmlType="button" extraClass="mr-4" onClick={cancel}>
+            Отменить
+          </Button>
+          <Button htmlType="submit">Сохранить</Button>
+        </form>
       </div>
     </div>
   );

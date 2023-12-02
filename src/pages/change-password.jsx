@@ -15,7 +15,12 @@ export function ChangePassword() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
+  const changePass = (e) => {
+    e.preventDefault();
+    changedPassword(user.password, user.code).then(() =>
+      navigate("/login", { replace: true })
+    );
+  };
   const user = useSelector((store) => store.loginActions.user);
   const codeSent = useSelector((store) => store.loginActions.code);
   const onChange = (e) => {
@@ -27,7 +32,7 @@ export function ChangePassword() {
   }
   return (
     <div>
-      <div className={Loginstyles.login_container}>
+      <form onSubmit={changePass} className={Loginstyles.login_container}>
         <h1>Восстановление пароля</h1>
         <Input
           value={user.password}
@@ -55,11 +60,7 @@ export function ChangePassword() {
 
         <Button
           extraClass={`${Loginstyles.reccover_pass_bt} mb-20`}
-          onClick={() =>
-            changedPassword(user.password, user.code).then(() =>
-              navigate("/login", { replace: true })
-            )
-          }
+          htmlType="submit"
         >
           Сохранить
         </Button>
@@ -71,7 +72,7 @@ export function ChangePassword() {
             </Link>
           </p>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
