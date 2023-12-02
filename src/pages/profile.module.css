@@ -1,0 +1,30 @@
+.container {
+  margin-top: 120px;
+  margin-left: 380px;
+}
+.main_cont {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+}
+.links_cont {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #8585ad;
+  height: 64px;
+}
+.active {
+  color: #f2f2f3;
+}
+.text {
+  max-width: 326.4px;
+  text-align: start;
+  color: #8585ad;
+  opacity: 0.4;
+}

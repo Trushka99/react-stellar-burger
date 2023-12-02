@@ -4,6 +4,8 @@
   flex-direction: column;
   position: relative;
   cursor: pointer;
+  text-decoration: none;
+  color: #f2f2f3;
 }
 .price_container {
   display: flex;

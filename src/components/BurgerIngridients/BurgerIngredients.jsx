@@ -5,20 +5,11 @@ import IngridientsStyle from "./BurgerIngredients.module.css";
 import { Ingredient } from "../Ingridient/Ingridient";
 import { useSelector, useDispatch } from "react-redux";
 import { useInView } from "react-intersection-observer";
-import { Modal } from "../Modal/Modal";
-import { setToModal } from "../../services/actions/getIngridients";
 export function BurgerIngredients() {
   const Bun = useSelector((store) => store.Ingredients.bun);
   const items = useSelector((store) => store.Ingredients.items);
-  const modalDets = useSelector((store) => store.Ingredients.ingModal);
 
   const [current, setCurrent] = React.useState("Соусы");
-  const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = React.useState(false);
-  const openModal = (details) => {
-    setIsOpen(true);
-    dispatch(setToModal(details));
-  };
 
   const allIngredients = useSelector(
     (store) => store.burgerConstructor.ingredients
@@ -62,7 +53,6 @@ export function BurgerIngredients() {
         <div ref={buns} className={IngridientsStyle.grid}>
           {items.map((ingridient) => (
             <Ingredient
-              handleclick={() => openModal(ingridient)}
               count={Bun.filter((item) => item._id === ingridient._id).length}
               key={ingridient._id}
               {...ingridient}
@@ -74,7 +64,6 @@ export function BurgerIngredients() {
         <div ref={sause} className={IngridientsStyle.grid}>
           {items.map((ingridient) => (
             <Ingredient
-              handleclick={() => openModal(ingridient)}
               count={
                 allIngredients.filter((item) => item._id === ingridient._id)
                   .length
@@ -89,7 +78,6 @@ export function BurgerIngredients() {
         <div ref={inner} className={IngridientsStyle.grid}>
           {items.map((ingridient) => (
             <Ingredient
-              handleclick={() => openModal(ingridient)}
               count={
                 allIngredients.filter((item) => item._id === ingridient._id)
                   .length
@@ -101,11 +89,6 @@ export function BurgerIngredients() {
           ))}
         </div>
       </div>
-      {isOpen && (
-        <Modal onClose={() => setIsOpen(false)}>
-          <IngredientDetails {...modalDets} />
-        </Modal>
-      )}
     </div>
   );
 }

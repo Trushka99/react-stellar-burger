@@ -8,7 +8,17 @@ import { useState } from "react";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useDrag } from "react-dnd";
 import { ingridientTypes } from "../../utils/types";
+import { Link, useLocation } from "react-router-dom";
+import { setToModal } from "../../services/actions/getIngridients";
+import { useDispatch } from "react-redux";
 export const Ingredient = (props) => {
+  const dispatch = useDispatch();
+
+  const location = useLocation();
+  function handleClick() {
+    dispatch(setToModal(props));
+  }
+
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
     item: props,
@@ -18,8 +28,10 @@ export const Ingredient = (props) => {
   });
   if (props.type === props.ex) {
     return (
-      <div
-        onClick={() => props.handleclick()}
+      <Link
+        onClick={handleClick}
+        to={`/ingredients/${props._id}`}
+        state={{ previousLocation: location }}
         style={{ opacity }}
         ref={dragRef}
         className={IngridientStyle.item}
@@ -37,7 +49,7 @@ export const Ingredient = (props) => {
         </div>
         <p className="text text_type_main-default">{props.name}</p>
         <Counter count={props.count} size="default" extraClass="m-1" />
-      </div>
+      </Link>
     );
   }
   return null;
