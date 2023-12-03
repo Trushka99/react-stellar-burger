@@ -1,13 +1,8 @@
 import { useContext, useState, createContext } from "react";
 import { deleteCookie, setCookie } from "./cookie";
-import React from "react";
+import { checkResponse, checkSuccess } from "../utils/api";
 import { login, logout } from "../utils/api";
-import {
-  stateEmail,
-  statePass,
-  stateName,
-  stateProfile,
-} from "./actions/logining";
+import { stateProfile } from "./actions/logining";
 import { getUser } from "../utils/api";
 import { useDispatch } from "react-redux";
 
@@ -28,31 +23,32 @@ export function useProvideAuth() {
 
   const [user, setUser] = useState(null);
 
-  const getUse = async () => {
-    return await getUser()
-      .then((res) => res.json())
-
+  const getUse = () => {
+    getUser()
       .then((data) => {
         if (data.success) {
           setUser(data.user);
           dispatch(stateProfile(data.user));
         }
         return data.success;
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
-  const signIn = async (form) => {
-    login(form).then((res) => {
-      if (res && res.success) {
-        setCookie("accessToken", res.accessToken.split("Bearer ")[1]);
-        setCookie("refreshToken", res.refreshToken);
-        setUser(res.user);
-      }
-    });
+  const signIn = (form) => {
+    login(form)
+      .then((res) => {
+        if (res && res.success) {
+          setCookie("accessToken", res.accessToken.split("Bearer ")[1]);
+          setCookie("refreshToken", res.refreshToken);
+          setUser(res.user);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   const signOut = async () => {
-    await logout();
+    await logout().catch((err) => console.log(err));
     // Удаляем пользователя из хранилища
     setUser(null);
     // Удаляем куку token

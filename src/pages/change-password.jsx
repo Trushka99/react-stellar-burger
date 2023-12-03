@@ -17,9 +17,9 @@ export function ChangePassword() {
   const navigate = useNavigate();
   const changePass = (e) => {
     e.preventDefault();
-    changedPassword(user.password, user.code).then(() =>
-      navigate("/login", { replace: true })
-    );
+    changedPassword(user.password, user.code)
+      .then(() => navigate("/login", { replace: true }))
+      .catch((err) => console.log(err));
   };
   const user = useSelector((store) => store.loginActions.user);
   const codeSent = useSelector((store) => store.loginActions.code);
@@ -28,7 +28,7 @@ export function ChangePassword() {
   };
 
   if (codeSent === false) {
-    return <Navigate to="/forgot-pass" replace />;
+    return <Navigate to="/forgot-password" replace />;
   }
   return (
     <div>

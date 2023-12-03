@@ -1,3 +1,4 @@
+import { getUser } from "../../utils/api";
 export const SET_DETAILS = "SET_DETAILS";
 export const SET_PROFILE = "SET_PROFILE";
 export const SET_CODE_STATUS = "SET_CODE_STATUS";
@@ -23,5 +24,17 @@ export const stateCodeStatus = () => {
     dispatch({
       type: SET_CODE_STATUS,
     });
+  };
+};
+export const getProfile = () => {
+  return function (dispatch) {
+    getUser()
+      .then((data) =>
+        dispatch({
+          type: SET_PROFILE,
+          profile: data.user,
+        })
+      )
+      .catch((err) => console.log(err));
   };
 };

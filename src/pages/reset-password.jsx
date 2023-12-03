@@ -20,7 +20,8 @@ export function ResetPassword() {
     e.preventDefault();
     sendPassword(user.email)
       .then(() => dispatch(stateCodeStatus()))
-      .then(() => navigate("/reset-password", { replace: true }));
+      .then(() => navigate("/reset-password", { replace: true }))
+      .catch((err) => console.log(err));
   };
   const user = useSelector((store) => store.loginActions.user);
 

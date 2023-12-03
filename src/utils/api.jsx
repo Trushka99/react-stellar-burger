@@ -7,14 +7,14 @@ const BASE_URL = {
   },
 };
 
-function checkResponse(res) {
+export function checkResponse(res) {
   if (!res.ok) {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
   return res.json();
 }
 // создаем функцию проверки на `success`
-const checkSuccess = (res) => {
+export const checkSuccess = (res) => {
   if (res && res.success) {
     return res;
   }
@@ -94,19 +94,17 @@ export function login(user) {
     .then((res) => checkSuccess(res));
 }
 
-export const getUser = async () =>
-  await fetch(`${BASE_URL.URL}/auth/user`, {
+export function getUser() {
+  return fetch(`${BASE_URL.URL}/auth/user`, {
     method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + getCookie("accessToken"),
     },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-  });
+  })
+    .then((res) => checkResponse(res))
+    .then((res) => checkSuccess(res));
+}
 
 export function logout() {
   return fetch(`${BASE_URL.URL}/auth/logout`, {

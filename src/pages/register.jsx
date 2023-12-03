@@ -24,9 +24,9 @@ export function RegisterPage() {
   const user = useSelector((store) => store.loginActions.user);
   const register = (e) => {
     e.preventDefault();
-    registerUser(user.email, user.password, user.name).then(() =>
-      navigate("/", { replace: true })
-    );
+    registerUser(user.email, user.password, user.name)
+      .then(() => navigate("/", { replace: true }))
+      .catch((err) => console.log(err));
   };
   const onChange = (e) => {
     dispatch(stateDetails({ ...user, [e.target.name]: e.target.value }));

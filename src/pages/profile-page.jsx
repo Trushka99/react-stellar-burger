@@ -8,11 +8,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "../utils/api";
 import { stateProfile } from "../services/actions/logining";
 import styles from "./profile.module.css";
 import { useAuth } from "../services/auth";
 import { updateUser } from "../utils/api";
+import { getProfile } from "../services/actions/logining";
 export function ProfilePage() {
   const navigate = useNavigate();
   const auth = useAuth();
@@ -21,14 +21,12 @@ export function ProfilePage() {
   const dispatch = useDispatch();
 
   const logout = React.useCallback(() => {
-    // Вызовем функцию signOut
     auth.signOut().then(() => {
-      // После выхода переадресуем пользователя на маршрут /login
       navigate("/login", { replace: true });
     });
   }, [auth, navigate]);
   React.useEffect(() => {
-     getUser();
+    dispatch(getProfile());
   }, []);
   const cancel = () => {
     setDisabled(true);
@@ -44,10 +42,12 @@ export function ProfilePage() {
     updateUser(user);
   };
   const user = useSelector((store) => store.loginActions.profile);
+  const password = useSelector((store) => store.loginActions.user.password);
+
   const onChange = (e) => {
     dispatch(stateProfile({ ...user, [e.target.name]: e.target.value }));
   };
-  return (
+  return auth.user ? (
     <div className={styles.container}>
       <div className={styles.main_cont}>
         <div className={styles.links_cont}>
@@ -100,6 +100,7 @@ export function ProfilePage() {
           />
           <Input
             type={"text"}
+            value={password}
             placeholder={"пароль"}
             icon={"EditIcon"}
             name={"password"}
@@ -117,5 +118,7 @@ export function ProfilePage() {
         </form>
       </div>
     </div>
+  ) : (
+    <h1>Загрузка данных</h1>
   );
 }
