@@ -8,7 +8,7 @@ import { useInView } from "react-intersection-observer";
 export function BurgerIngredients() {
   const Bun = useSelector((store) => store.Ingredients.bun);
   const items = useSelector((store) => store.Ingredients.items);
-
+  
   const [current, setCurrent] = React.useState("Соусы");
 
   const allIngredients = useSelector(

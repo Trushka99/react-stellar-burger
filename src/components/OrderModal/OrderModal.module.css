@@ -1,0 +1,67 @@
+.modalOrderCont {
+  padding: 40px;
+  width: 640px;
+  text-align: start;
+}
+
+.orderNumber {
+  height: 64px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.readyText {
+  color: #00cccc;
+}
+
+.ingredientsCont {
+  max-height: 312px;
+  display: grid;
+  gap: 16px;
+  align-content: flex-start;
+  overflow-y: scroll;
+  padding: 0 24px 0 0;
+}
+.ingredientCard {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.ingredientBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.ingredientPrice {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: flex-end;
+}
+
+.dateAndPrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dateColor {
+  color: #8585ad;
+}
+
+.price_container {
+  display: flex;
+  flex-direction: row;
+  gap: 9px;
+  align-content: center;
+}

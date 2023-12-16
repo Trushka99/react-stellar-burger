@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./App.module.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { FullIngredientPage } from "../FullIngredientPage/FullIngredientPage";
 import { Header } from "../Headers/Header";
 import { BurgerIngredients } from "../BurgerIngridients/BurgerIngredients";
@@ -20,8 +20,13 @@ import { useLocation } from "react-router-dom";
 import { Modal } from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { OrderModal } from "../OrderModal/OrderModal";
+import { Feed } from "../../pages/feedpage";
+import { OrderFullPage } from "../../pages/orderFullPage";
+import { setModalEmpty } from "../../services/actions/getIngridients";
+import { ProfileUserInfo } from "../ProfileUserInfo/ProfileUserInfo";
+import { ProfileOrders } from "../ProfileOrders/ProfileOrders";
 function Constructor() {
   return (
     <main className={styles.main}>
@@ -35,15 +40,20 @@ function Constructor() {
 }
 
 function App() {
+  const Orders = useSelector((store) => store.ws.orders);
+  const profileOrders = useSelector((store) => store.ws.profileOrders);
+
   const navigate = useNavigate();
   const location = useLocation();
-  const previousLocation = location.state?.previousLocation;
+  const background = location.state && location.state.background;
   function onClose() {
     navigate(-1);
+    dispatch(setModalEmpty());
   }
-  const [state, setState] = useState(true);
-  const modalIners = useSelector((store) => store.Ingredients.ingModal);
+  const ws = useSelector((store) => store.ws);
+
   const dispatch = useDispatch();
+
   React.useEffect(() => {
     dispatch(getItems());
   }, [dispatch]);
@@ -54,7 +64,7 @@ function App() {
         <Header />
 
         <DndProvider backend={HTML5Backend}>
-          <Routes location={previousLocation || location}>
+          <Routes location={background || location}>
             <Route path="/" element={<Constructor />} />
             <Route
               path="/login"
@@ -100,18 +110,47 @@ function App() {
                   element={<ProfilePage />}
                 />
               }
-            />
-            <Route path="*" element={<Constructor />} />
+            >
+              <Route path="" element={<ProfileUserInfo />} />
+              <Route path="orders" element={<ProfileOrders />} />
+            </Route>
+            <Route path="/feed" element={<Feed />} />
             <Route path="/ingredients/:id" element={<FullIngredientPage />} />
+            <Route path="/feed/:number" element={<OrderFullPage />} />
+            <Route path="/profile/orders/:number" element={<OrderFullPage />} />
           </Routes>
         </DndProvider>
-        {previousLocation && (
+        {background && (
           <Routes>
             <Route
               path="/ingredients/:id"
               element={
                 <Modal onClose={onClose}>
-                  <IngredientDetails/>
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
+          </Routes>
+        )}
+        {background && Orders && (
+          <Routes>
+            <Route
+              path="/feed/:number"
+              element={
+                <Modal onClose={onClose}>
+                  <OrderModal data={Orders} />
+                </Modal>
+              }
+            />
+          </Routes>
+        )}
+        {background && profileOrders && (
+          <Routes>
+            <Route
+              path="/profile/orders/:number"
+              element={
+                <Modal onClose={onClose}>
+                  <OrderModal />
                 </Modal>
               }
             />
