@@ -1,0 +1,30 @@
+.login_container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  flex-direction: column;
+  margin-top: 180px;
+  text-align: center;
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.button {
+  max-width: 128px;
+  margin-left: 176px;
+}
+.register_button {
+  max-width: 253px;
+  margin-left: 113px;
+}
+.reccover_pass_bt {
+  max-width: 196px;
+  margin-left: 142px;
+}
+.link {
+  text-decoration: none;
+  color: #4c4cff;
+}

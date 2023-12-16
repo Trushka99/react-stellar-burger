@@ -22,7 +22,12 @@ import { v4 as uuidv4 } from "uuid";
 import { selectIngredient } from "../../services/actions/constructor";
 import { SET_ORDER_NUMBER } from "../../services/actions/constructor";
 import { selectAll, resetBuns } from "../../services/actions/getIngridients";
+import { useAuth } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 export function BurgerConstructor() {
+  const navigate = useNavigate();
+
+  const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const Buns = useSelector((store) => store.Ingredients.bun);
@@ -77,7 +82,12 @@ export function BurgerConstructor() {
   });
 
   const handleClick = () => {
-    dispatch(setOrderNumber(result));
+    if (!auth.user) {
+      return navigate("/login");
+    }
+    if (auth.user) {
+      dispatch(setOrderNumber(result));
+    }
   };
 
   return (

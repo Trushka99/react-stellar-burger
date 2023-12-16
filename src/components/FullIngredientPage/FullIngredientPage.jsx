@@ -1,22 +1,22 @@
-import IngridientStyle from "./IngredientDetails.module.css";
-import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-export const IngredientDetails = () => {
+import IngridientStyle from "../IngredientDetails/IngredientDetails.module.css";
+export const FullIngredientPage = () => {
   const { id } = useParams();
   const items = useSelector((store) => store.Ingredients.items);
 
   const ingredientInfo = items.find((item) => item._id === id);
-
   return !ingredientInfo ? (
     <div>Загрузка данных...</div>
   ) : (
     <div className={IngridientStyle.container}>
-      <h2 className={`${ingredientInfo.title} text text_type_main-large`}>
+      <h2
+        className={`${IngridientStyle.title_fullpage} text text_type_main-large`}
+      >
         Детали ингридиента
       </h2>
       <img
-        className={ingredientInfo.img}
+        className={IngridientStyle.img}
         src={ingredientInfo.image_large}
         alt="Изображение ингридиента"
       ></img>
@@ -59,16 +59,4 @@ export const IngredientDetails = () => {
       </ul>
     </div>
   );
-};
-IngredientDetails.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      image: PropTypes.string,
-      name: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-    })
-  ),
 };
