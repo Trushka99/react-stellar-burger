@@ -22,7 +22,7 @@ export function ProfilePage() {
     dispatch(getProfile());
   }, [dispatch]);
 
-  return auth.user ? (
+  return (
     <div className={styles.container}>
       <div className={styles.main_cont}>
         <div className={styles.links_cont}>
@@ -63,7 +63,5 @@ export function ProfilePage() {
         <Outlet />
       </div>
     </div>
-  ) : (
-    <h1>Загрузка данных</h1>
   );
 }

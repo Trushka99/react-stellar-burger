@@ -10,9 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 export const Feed = () => {
   const ws = useSelector((store) => store.ws);
   const dispatch = useDispatch();
+
   React.useEffect(() => {
     dispatch({ type: WS_CONNECTION_START });
-    return dispatch({ type: WS_CONNECTION_CLOSED });
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
   }, [dispatch]);
   return (
     <div className={styles.page}>

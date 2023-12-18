@@ -33,7 +33,6 @@ export const OrderDets = (data) => {
         to={`${location.pathname}/${data.number}`}
         state={{ background: location }}
         className={`${styles.order}`}
-        key={data._id}
       >
         <p
           className={`${styles.orderNumber} text text_type_digits-default`}
@@ -59,14 +58,12 @@ export const OrderDets = (data) => {
         )}
         <div className={`${styles.image_container}`}>
           {ingredientsOfOrder.slice(0, 4).map((items) => (
-            <>
-              <div key={items} className={`${styles.imageBorder}`}>
-                <img
-                  className={`${styles.image} `}
-                  src={allItems.filter((item) => item._id === items)[0]?.image}
-                />
-              </div>
-            </>
+            <div key={items} className={`${styles.imageBorder}`}>
+              <img
+                className={`${styles.image} `}
+                src={allItems.filter((item) => item._id === items)[0]?.image}
+              />
+            </div>
           ))}
         </div>
         <div className={`${styles.orderPrice}`}>

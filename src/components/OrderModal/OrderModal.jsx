@@ -4,11 +4,12 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import imagestyle from "../Orderdets/Orderdets.module.css";
 import { getOrder } from "../../services/actions/getIngridients";
 export const OrderModal = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { number } = useParams();
   useEffect(() => {
@@ -29,6 +30,7 @@ export const OrderModal = () => {
     }
     return [...acc, item];
   }, []);
+
   return !openedOrder ? (
     <div>Загрузка данных..</div>
   ) : (
@@ -57,14 +59,14 @@ export const OrderModal = () => {
       )}
 
       <p className="text text_type_main-medium mb-6">Состав:</p>
-      <ul className={`${styles.ingredientsCont} mb-10`}>
+      <div className={`${styles.ingredientsCont} mb-10`}>
         {uniqueIngredients?.map((item) => {
           const ingredientInfo = allItems.find(
             (ingredient) => ingredient._id === item
           );
 
           return (
-            <li className={`${styles.ingredientCard}`} key={item._id}>
+            <div className={`${styles.ingredientCard}`} key={item}>
               <div className={`${styles.ingredientBox}`}>
                 <div className={`${imagestyle.imageBorder}`}>
                   <img
@@ -76,7 +78,6 @@ export const OrderModal = () => {
                   {ingredientInfo.name}
                 </p>
               </div>
-              <p></p>
               <div className={`${styles.ingredientPrice}`}>
                 <p className={`text text_type_digits-default mr-2`}>
                   {" "}
@@ -89,10 +90,10 @@ export const OrderModal = () => {
                 </p>
                 <CurrencyIcon type="primary" />
               </div>
-            </li>
+            </div>
           );
         })}
-      </ul>
+      </div>
       <div className={`${styles.dateAndPrice}`}>
         <p className={`${styles.dateColor} text text_type_main-default `}>
           <FormattedDate date={new Date(openedOrder[0]?.createdAt)} />

@@ -24,7 +24,9 @@ export function ProfileUserInfo() {
       })
     );
   };
-  const updateProfile = () => {
+  console.log(auth.user);
+  const updateProfile = (e) => {
+    e.preventDefault();
     setDisabled(true);
     updateUser(user);
   };
@@ -32,7 +34,7 @@ export function ProfileUserInfo() {
   const onChange = (e) => {
     dispatch(stateProfile({ ...user, [e.target.name]: e.target.value }));
   };
-  return auth.user ? (
+  return (
     <form className={styles.form} onSubmit={updateProfile}>
       <Input
         onChange={onChange}
@@ -80,7 +82,5 @@ export function ProfileUserInfo() {
       </Button>
       <Button htmlType="submit">Сохранить</Button>
     </form>
-  ) : (
-    <h1>Загрузка данных</h1>
   );
 }

@@ -22,7 +22,7 @@ import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { OrderModal } from "../OrderModal/OrderModal";
-import { Feed } from "../../pages/feedpage";
+import { Feed } from "../../pages/feedPage";
 import { OrderFullPage } from "../../pages/orderFullPage";
 import { setModalEmpty } from "../../services/actions/getIngridients";
 import { ProfileUserInfo } from "../ProfileUserInfo/ProfileUserInfo";
@@ -45,12 +45,14 @@ function App() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const previousLocation = location.state?.previousLocation;
+
   const background = location.state && location.state.background;
+  const from = location.state?.from || location;
   function onClose() {
     navigate(-1);
     dispatch(setModalEmpty());
   }
-  const ws = useSelector((store) => store.ws);
 
   const dispatch = useDispatch();
 
@@ -95,24 +97,24 @@ function App() {
             />
             <Route
               path="/reset-password"
-              element={
-                <ProtectedRouteElement
-                  needsAuth={false}
-                  element={<ChangePassword />}
-                />
-              }
+              element={<ProtectedRouteElement element={<ChangePassword />} />}
             />
             <Route
               path="/profile"
               element={
-                <ProtectedRouteElement
-                  needsAuth={true}
-                  element={<ProfilePage />}
-                />
+                <ProtectedRouteElement needsAuth element={<ProfilePage />} />
               }
             >
               <Route path="" element={<ProfileUserInfo />} />
-              <Route path="orders" element={<ProfileOrders />} />
+              <Route
+                path="orders"
+                element={
+                  <ProtectedRouteElement
+                    needsAuth
+                    element={<ProfileOrders />}
+                  />
+                }
+              />
             </Route>
             <Route path="/feed" element={<Feed />} />
             <Route path="/ingredients/:id" element={<FullIngredientPage />} />
@@ -144,14 +146,19 @@ function App() {
             />
           </Routes>
         )}
-        {background && profileOrders && (
+        {background && (
           <Routes>
             <Route
               path="/profile/orders/:number"
               element={
-                <Modal onClose={onClose}>
-                  <OrderModal />
-                </Modal>
+                <ProtectedRouteElement
+                  needsAuth
+                  element={
+                    <Modal onClose={onClose}>
+                      <OrderModal data={profileOrders} />
+                    </Modal>
+                  }
+                />
               }
             />
           </Routes>
