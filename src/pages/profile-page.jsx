@@ -4,7 +4,6 @@ import { NavLink, Outlet } from "react-router-dom";
 import styles from "./profile.module.css";
 import { useAuth } from "../services/auth";
 import { getProfile } from "../services/actions/logining";
-import { WS_CONNECTION_START } from "../services/actions/wsActions";
 import { useDispatch } from "react-redux";
 export function ProfilePage() {
   const navigate = useNavigate();
@@ -18,7 +17,6 @@ export function ProfilePage() {
     });
   }, [auth, navigate]);
   React.useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
     dispatch(getProfile());
   }, [dispatch]);
 
