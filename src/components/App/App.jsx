@@ -22,7 +22,7 @@ import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { OrderModal } from "../OrderModal/OrderModal";
-import { Feed } from "../../pages/feedPage";
+import { Feed } from "../../pages/feed";
 import { OrderFullPage } from "../../pages/orderFullPage";
 import { setModalEmpty } from "../../services/actions/getIngridients";
 import { ProfileUserInfo } from "../ProfileUserInfo/ProfileUserInfo";

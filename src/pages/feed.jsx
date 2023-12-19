@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./feedpage.module.css";
+import styles from "./feed.module.css";
 import { Orders } from "../components/Orders/Orders";
 import {
   WS_CONNECTION_START,
