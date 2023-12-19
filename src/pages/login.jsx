@@ -9,6 +9,7 @@ import React from "react";
 import { useAuth } from "../services/auth";
 import { stateDetails } from "../services/actions/logining";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 export function LoginPage() {
   const user = useSelector((store) => store.loginActions.user);
@@ -29,11 +30,7 @@ export function LoginPage() {
     [auth, user]
   );
 
-  if (auth.user) {
-    return <Navigate to={"/"} />;
-  }
-
-  return (
+  return !auth.user ? (
     <form onSubmit={login}>
       <div className={Loginstyles.login_container}>
         <h1>Вход</h1>
@@ -78,5 +75,7 @@ export function LoginPage() {
         </div>
       </div>
     </form>
+  ) : (
+    <Navigate to={'/'} />
   );
 }

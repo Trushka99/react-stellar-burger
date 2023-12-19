@@ -50,8 +50,8 @@ export const ingReducer = (state = initialState, action) => {
     case SET_TO_MODAL: {
       return {
         ...state,
-        ingModal: action.ingModal
-      }
+        ingModal: action.ingModal,
+      };
     }
     default: {
       return state;

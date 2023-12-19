@@ -1,4 +1,4 @@
-import { getIngredients } from "../../utils/api";
+import { getIngredients, getorder } from "../../utils/api";
 export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";
 export const SET_BUN = "SET_BUN";
 export const SET_ALL_TO_CONSTRUCTOR = "SET_ALL_TO_CONSTRUCTOR";
@@ -42,11 +42,27 @@ export const resetBuns = () => {
     });
   };
 };
-export const setToModal = (item) => {
+export const setModalEmpty = () => {
   return function (dispatch) {
     dispatch({
       type: SET_TO_MODAL,
-      ingModal: item,
+      ingModal: [],
     });
   };
 };
+export function getOrder(number) {
+  return function (dispatch) {
+    getorder(number)
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: SET_TO_MODAL,
+            ingModal: res.orders,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}

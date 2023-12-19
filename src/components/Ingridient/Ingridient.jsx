@@ -9,15 +9,11 @@ import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useDrag } from "react-dnd";
 import { ingridientTypes } from "../../utils/types";
 import { Link, useLocation } from "react-router-dom";
-import { setToModal } from "../../services/actions/getIngridients";
 import { useDispatch } from "react-redux";
 export const Ingredient = (props) => {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  function handleClick() {
-    dispatch(setToModal(props));
-  }
 
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
@@ -29,9 +25,8 @@ export const Ingredient = (props) => {
   if (props.type === props.ex) {
     return (
       <Link
-        onClick={handleClick}
         to={`/ingredients/${props._id}`}
-        state={{ previousLocation: location }}
+        state={{ background: location }}
         style={{ opacity }}
         ref={dragRef}
         className={IngridientStyle.item}

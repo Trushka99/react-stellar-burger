@@ -1,0 +1,42 @@
+.page {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.mainPage {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.statusesContainer {
+  max-width: 584px;
+}
+
+.columnElement {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.totalOrdersShadow {
+  text-shadow: #3333ff80 0 0 20px;
+}
+.digitsRow {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.orderNumberList {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.readytext {
+  color: #00cccc;
+}

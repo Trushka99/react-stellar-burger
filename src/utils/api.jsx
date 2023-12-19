@@ -35,6 +35,7 @@ export function postOrder(array) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
 
     body: JSON.stringify({
@@ -125,6 +126,14 @@ export function updateUser(data) {
       Authorization: "Bearer " + getCookie("accessToken"),
     },
     body: JSON.stringify(data),
+  })
+    .then((res) => checkResponse(res))
+    .then((res) => checkSuccess(res));
+}
+
+export function getorder(number) {
+  return fetch(`${BASE_URL.URL}/orders/${number}`, {
+    method: "GET",
   })
     .then((res) => checkResponse(res))
     .then((res) => checkSuccess(res));

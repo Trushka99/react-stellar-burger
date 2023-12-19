@@ -21,7 +21,7 @@ export function Header() {
           </p>
         </NavLink>
         <NavLink
-          to="/"
+          to="/feed"
           className={`${headerStyle.header_left} pl-5 pr-5 pt-4 pb-4`}
         >
           <ListIcon type="secondary" />

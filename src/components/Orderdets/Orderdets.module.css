@@ -1,0 +1,84 @@
+.order {
+  background-color: #1c1c21;
+  text-decoration: none;
+  grid-template-areas:
+    "ordernumber orderdate"
+    "ordername ordername"
+    "orderstatus orderstatus"
+    "images price";
+  color: #f2f2f3;
+  border-radius: 40px;
+  width: 100%;
+  min-height: 246px;
+  display: grid;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.orderNumber {
+  grid-area: ordernumber;
+}
+
+.orderDate {
+  grid-area: orderdate;
+  justify-self: end;
+}
+
+.orderName {
+  grid-area: ordername;
+  max-width: 536px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.orderStatus {
+  grid-area: orderstatus;
+}
+
+.readyText {
+  color: #00cccc;
+}
+
+.orderPrice {
+  margin: auto 0 auto auto;
+  grid-area: price;
+  display: flex;
+  flex-direction: row;
+  gap: 9.5px;
+  align-items: center;
+  max-width: fit-content;
+  text-align: end;
+}
+
+.image_container {
+  margin: 0;
+  grid-area: images;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.imageBorder {
+  margin-right: -20px;
+  display: flex;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(
+    to right,
+    rgba(128, 26, 178, 1),
+    rgba(76, 76, 255, 1)
+  );
+  border-radius: 100px;
+}
+
+.image {
+  margin: auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+  background-color: #1c1c21;
+  object-fit: cover;
+}
