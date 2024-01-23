@@ -1,14 +1,12 @@
-import { useEffect } from "react";
 import styles from "./OrderModal.module.css";
 import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useParams, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "../../utils/hooks";
+import { useParams } from "react-router-dom";
+import { useSelector } from "../../utils/hooks";
 import imagestyle from "../Orderdets/Orderdets.module.css";
-import { getOrder } from "../../services/actions/getIngridients";
-import React, { FC } from "react";
+import { FC } from "react";
 import { TOrderData } from "../../utils/types";
 
 export type TOrderInfo = {
@@ -16,7 +14,6 @@ export type TOrderInfo = {
 };
 
 export const OrderModal: FC<TOrderInfo> = ({ data }) => {
-  const dispatch = useDispatch();
   const { number } = useParams();
   const openedOrder = data.find((item) => item._id === number);
   const allItems = useSelector((store) => store.Ingredients.items);

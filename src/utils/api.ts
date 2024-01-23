@@ -29,7 +29,6 @@ type TResponseBody<TDataKey extends string = "", TDataType = {}> = {
 // создаем функцию проверки на `success`
 export const checkSuccess = (res: TResponseBody) => {
   if (res && res.success) {
-    console.log(res);
     return res;
   }
   // не забываем выкидывать ошибку, чтобы она попала в `catch`

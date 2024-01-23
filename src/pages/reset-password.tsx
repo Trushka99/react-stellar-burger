@@ -7,7 +7,7 @@ import {
 import Loginstyles from "./login.module.css";
 import { sendPassword } from "../utils/api";
 import { useNavigate, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "../utils/hooks";
+import { useDispatch } from "../utils/hooks";
 import { stateCodeStatus } from "../services/actions/logining";
 
 export const ResetPassword: FC = () => {

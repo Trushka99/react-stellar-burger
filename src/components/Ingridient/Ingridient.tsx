@@ -6,7 +6,7 @@ import IngridientStyle from "./Ingridient.module.css";
 import { useDrag } from "react-dnd";
 import { TIngredientData } from "../../utils/types";
 import { Link, useLocation } from "react-router-dom";
-import React, { FC } from "react";
+import { FC } from "react";
 
 export const Ingredient: FC<{
   props: TIngredientData;

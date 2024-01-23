@@ -17,7 +17,7 @@ export const socketMiddleware = (
   return (store) => {
     let socket: WebSocket | null = null;
     return (next) => (action) => {
-      const { dispatch, getState } = store;
+      const { dispatch } = store;
       const { type, payload } = action;
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
       const accessToken = getCookie("accessToken");

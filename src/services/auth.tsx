@@ -1,10 +1,7 @@
 import React, { useContext, useState, createContext } from "react";
 import { deleteCookie, setCookie } from "./cookie";
-import { checkResponse, checkSuccess } from "../utils/api";
 import { login, logout } from "../utils/api";
-import { stateProfile } from "./actions/logining";
 import { getUser } from "../utils/api";
-import { useDispatch } from "../utils/hooks";
 import { TUserData } from "../utils/types";
 
 const AuthContext = createContext<ReturnType<typeof useProvideAuth>>(
@@ -22,10 +19,7 @@ export function useAuth() {
 }
 
 export function useProvideAuth() {
-  const dispatch = useDispatch();
-
   const [user, setUser] = useState<TUserData>();
-  console.log(user);
   const getUse = () => {
     getUser()
       .then((data) => {

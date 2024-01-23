@@ -8,7 +8,6 @@ import {
 import Loginstyles from "./login.module.css";
 import { registerUser } from "../utils/api";
 import { useNavigate, Link, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "../utils/hooks";
 import { useAuth } from "../services/auth";
 export const RegisterPage: FC = () => {
   let auth: any = useAuth();

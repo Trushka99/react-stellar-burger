@@ -7,10 +7,9 @@ import {
 import Loginstyles from "./login.module.css";
 import { changedPassword } from "../utils/api";
 import { useNavigate, Link, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "../utils/hooks";
+import { useSelector } from "../utils/hooks";
 
 export const ChangePassword: FC = () => {
-  const dispatch = useDispatch();
   const [user, setValue] = React.useState({ password: "", code: "" });
 
   const navigate = useNavigate();

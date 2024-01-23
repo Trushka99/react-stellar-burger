@@ -4,15 +4,11 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loginstyles from "./login.module.css";
-import { useNavigate, Navigate, Link } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import React, { ChangeEvent, FC } from "react";
 import { useAuth } from "../services/auth";
-import { stateProfile } from "../services/actions/logining";
-import { useSelector, useDispatch } from "../utils/hooks";
-import { useLocation } from "react-router-dom";
 
 export const LoginPage: FC = () => {
-  const dispatch = useDispatch();
   let auth = useAuth();
 
   const [user, setValue] = React.useState({ email: "", password: "" });

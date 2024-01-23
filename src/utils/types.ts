@@ -1,4 +1,3 @@
-
 export type TIngredientData = {
   readonly calories: number;
   readonly carbohydrates: number;

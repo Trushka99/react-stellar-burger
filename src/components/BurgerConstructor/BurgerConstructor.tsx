@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { TIngredientData } from "../../utils/types";
 import { useState } from "react";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
