@@ -1,5 +1,5 @@
 import { getUser } from "../../utils/api";
-import { AppThunk, AppDispatch } from "../../utils";
+import { AppThunk } from "../../utils";
 import { TUserData } from "../../utils/types";
 export const SET_PROFILE: "SET_PROFILE" = "SET_PROFILE";
 export const SET_CODE_STATUS: "SET_CODE_STATUS" = "SET_CODE_STATUS";
@@ -34,7 +34,7 @@ export const stateCodeStatus = (): IStateCodeStatus => ({
   type: SET_CODE_STATUS,
 });
 
-export const getProfile: AppThunk = () => (dispatch: AppDispatch) => {
+export const getProfile: AppThunk = () => (dispatch) => {
   getUser()
     .then((data) => {
       dispatch(getProf(data.user));

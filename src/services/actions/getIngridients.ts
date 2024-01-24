@@ -67,7 +67,7 @@ export const resetBuns = (): IResetBuns => ({
   type: RESET_BUNS,
 });
 
-export const setModalEmpty: AppThunk = () => (dispatch: AppDispatch) => {
+export const setModalEmpty: AppThunk = () => (dispatch) => {
   dispatch(getModalEmpty([]));
 };
 
@@ -82,7 +82,7 @@ export const getOrder: AppThunk =
       });
   };
 
-export const getItems: AppThunk = () => (dispatch: AppDispatch) => {
+export const getItems: AppThunk = () => (dispatch) => {
   getIngredients()
     .then((res) => {
       if (res && res.success) {

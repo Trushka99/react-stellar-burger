@@ -19,7 +19,7 @@ export const RegisterPage: FC = () => {
 
   const navigate = useNavigate();
 
-  const register = (e: React.SyntheticEvent) => {
+  const register = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     registerUser(user.email, user.password, user.name)
       .then(() => navigate("/", { replace: true }))

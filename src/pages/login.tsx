@@ -18,7 +18,7 @@ export const LoginPage: FC = () => {
   };
 
   const login = React.useCallback(
-    (e) => {
+    (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       auth.signIn(user);
     },

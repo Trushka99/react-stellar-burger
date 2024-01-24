@@ -28,7 +28,7 @@ export const Feed: FC = () => {
               <div className={styles.columnElement}>
                 <h1>Готов:</h1>
                 <ul className={styles.orderNumberList}>
-                  {ws.orders.slice(0, 9).map((item: TOrderData) => {
+                  {ws.orders.slice(0, 9).map((item) => {
                     if (item.status === "done") {
                       return (
                         <li
@@ -45,7 +45,7 @@ export const Feed: FC = () => {
               <div className={styles.columnElement}>
                 <h1>В работе:</h1>
                 <ul className={styles.orderNumberList}>
-                  {ws.orders.slice(0, 9).map((item: TOrderData) => {
+                  {ws.orders.slice(0, 9).map((item) => {
                     if (item.status === "pending") {
                       return (
                         <li

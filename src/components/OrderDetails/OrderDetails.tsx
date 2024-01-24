@@ -3,7 +3,7 @@ import { FC } from "react";
 type TorderDets = {
   number: number;
 };
-export const OrderDetails: FC<TorderDets> = (number) => {
+export const OrderDetails: FC<TorderDets> = ({ number }) => {
   return (
     <div className={OrderStyle.container}>
       <p className={`${OrderStyle.order_number} text text_type_digits-large`}>

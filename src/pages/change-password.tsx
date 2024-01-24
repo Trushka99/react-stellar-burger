@@ -13,7 +13,7 @@ export const ChangePassword: FC = () => {
   const [user, setValue] = React.useState({ password: "", code: "" });
 
   const navigate = useNavigate();
-  const changePass = (e: React.SyntheticEvent) => {
+  const changePass = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     changedPassword(user.password, user.code)
       .then(() => navigate("/login", { replace: true }))

@@ -4,7 +4,6 @@ import IngridientsStyle from "./BurgerIngredients.module.css";
 import { Ingredient } from "../Ingridient/Ingridient";
 import { useSelector } from "../../utils/hooks";
 import { useInView } from "react-intersection-observer";
-import { TIngredientData } from "../../utils/types";
 export const BurgerIngredients: FC = () => {
   const Bun = useSelector((store) => store.Ingredients.bun);
   const items = useSelector((store) => store.Ingredients.items);
@@ -60,11 +59,11 @@ export const BurgerIngredients: FC = () => {
       <div className={IngridientsStyle.container}>
         <h1>Булки</h1>
         <div ref={buns} className={IngridientsStyle.grid}>
-          {items.map((ingridient: TIngredientData) => (
+          {items.map((ingridient) => (
             <Ingredient
               count={
                 Bun.filter(
-                  (item: TIngredientData) => item._id === ingridient._id
+                  (item) => item._id === ingridient._id
                 ).length
               }
               key={ingridient._id}
@@ -75,11 +74,11 @@ export const BurgerIngredients: FC = () => {
         </div>
         <h1>Соусы</h1>
         <div ref={sause} className={IngridientsStyle.grid}>
-          {items.map((ingridient: TIngredientData) => (
+          {items.map((ingridient) => (
             <Ingredient
               count={
                 allIngredients.filter(
-                  (item: TIngredientData) => item._id === ingridient._id
+                  (item) => item._id === ingridient._id
                 ).length
               }
               key={ingridient._id}
@@ -90,11 +89,11 @@ export const BurgerIngredients: FC = () => {
         </div>
         <h1>Начинки</h1>
         <div ref={inner} className={IngridientsStyle.grid}>
-          {items.map((ingridient: TIngredientData) => (
+          {items.map((ingridient) => (
             <Ingredient
               count={
                 allIngredients.filter(
-                  (item: TIngredientData) => item._id === ingridient._id
+                  (item) => item._id === ingridient._id
                 ).length
               }
               key={ingridient._id}

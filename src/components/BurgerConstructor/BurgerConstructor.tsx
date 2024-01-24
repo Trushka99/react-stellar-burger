@@ -38,7 +38,7 @@ export const BurgerConstructor: FC = () => {
   const Order = useSelector((store) => store.burgerConstructor.ordernumber);
   const price = useSelector((store) => store.burgerConstructor.price);
   const dispatch = useDispatch();
-  const result = Total.map((item: TIngredientData) => item._id);
+  const result = Total.map((item) => item._id);
   const moveItem = (item: TIngredientData) => {
     dispatch(selectAll(item));
 
@@ -101,7 +101,7 @@ export const BurgerConstructor: FC = () => {
 
         {Ing.length >= 1 ? (
           <div className={BurgerConstructorStyles.ingridient_container}>
-            {Ing.map((ingridient: TIngredientData, index: number) => (
+            {Ing.map((ingridient, index) => (
               <ConstructorEl
                 index={index}
                 key={ingridient.Id}

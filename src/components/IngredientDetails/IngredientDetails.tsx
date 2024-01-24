@@ -2,12 +2,11 @@ import IngridientStyle from "./IngredientDetails.module.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "../../utils/hooks";
 import { FC } from "react";
-import { TIngredientData } from "../../utils/types";
 export const IngredientDetails: FC = () => {
   const { id } = useParams();
   const items = useSelector((store) => store.Ingredients.items);
 
-  const ingredientInfo = items.find((item: TIngredientData) => item._id === id);
+  const ingredientInfo = items.find((item) => item._id === id);
 
   return !ingredientInfo ? (
     <div>Загрузка данных...</div>
