@@ -1,7 +1,7 @@
 # Проект Stellar Burger 
 
 
-Ссылка на лайв-проект: https://trushka99.github.io/react-stellar-burger/
+Ссылка на лайв-проект: https://trushka99.github.io/
 
 
 **В данном проекте мы можем**:
